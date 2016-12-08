@@ -4,3 +4,8 @@ GENOME CORRECTOR QUALITY TESTER
 
 Genome Corrector Quality Tester is a tool for testing the quality of corrections.
 It is developed for purposes of testing DNA error correctors.
+
+Requirements
+------------
+- Boost - Program Options
+- CppUnit (for Test Suite)
