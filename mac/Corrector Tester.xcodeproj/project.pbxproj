@@ -24,6 +24,7 @@
 		DC0461E51DF6ED200051C37E /* N44Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */; };
 		DC0461ED1DF6EECE0051C37E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461EC1DF6EECE0051C37E /* main.cpp */; };
 		DC0461F31DF6EEFA0051C37E /* N44MatrixTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461F11DF6EEFA0051C37E /* N44MatrixTests.cpp */; };
+		DC0461F41DF87E3B0051C37E /* N44Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -433,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC0461ED1DF6EECE0051C37E /* main.cpp in Sources */,
+				DC0461F41DF87E3B0051C37E /* N44Matrix.cpp in Sources */,
 				DC0461F31DF6EEFA0051C37E /* N44MatrixTests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,6 +588,10 @@
 		DC0461EF1DF6EECE0051C37E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "-lcppunit";
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -593,6 +599,10 @@
 		DC0461F01DF6EECE0051C37E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "-lcppunit";
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
