@@ -6,3 +6,12 @@ Thumbs.db
 # Project files #
 Build
 xcuserdata/
+
+# Compilation #
+*.slo
+*.lo
+*.o
+*.obj
+
+*.gch
+*.pch
