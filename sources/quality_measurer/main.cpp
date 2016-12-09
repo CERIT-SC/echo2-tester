@@ -12,7 +12,7 @@
 #include <iomanip>
 #include "QMeasOptions.h"
 #include "Measuring.h"
-#include "Optional.h"
+#include "../global/Optional.h"
 using namespace std;
 
 string loadGenome(string genomeFileName);
