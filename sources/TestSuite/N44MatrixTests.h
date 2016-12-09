@@ -11,7 +11,7 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include "../Global/N44Matrix.h"
+#include "../global/N44Matrix.h"
 
 class N44MatrixTests : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(N44MatrixTests);

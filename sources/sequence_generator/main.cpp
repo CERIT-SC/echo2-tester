@@ -15,7 +15,7 @@
 #include "SeqGenOptions.h"
 #include "ProbMatrixGetter.h"
 #include "CorruptedSeqGenerator.h"
-#include "../Global/N44Matrix.h"
+#include "../global/N44Matrix.h"
 using namespace std;
 
 N44Matrix getMatrix(SeqGenOptions& options);

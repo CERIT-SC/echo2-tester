@@ -154,7 +154,7 @@
 				DC0461AC1DF6EBA20051C37E /* matrix_generator */,
 				DC0461B71DF6EBC70051C37E /* sequence_generator */,
 				DC0461C21DF6EBF20051C37E /* quality_measurer */,
-				DC0461DE1DF6ECF70051C37E /* Global */,
+				DC0461DE1DF6ECF70051C37E /* global */,
 				DC0461EB1DF6EECE0051C37E /* TestSuite */,
 				DC0461921DF6E98F0051C37E /* Products */,
 			);
@@ -223,15 +223,15 @@
 			path = ../sources/quality_measurer;
 			sourceTree = SOURCE_ROOT;
 		};
-		DC0461DE1DF6ECF70051C37E /* Global */ = {
+		DC0461DE1DF6ECF70051C37E /* global */ = {
 			isa = PBXGroup;
 			children = (
 				DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */,
 				DC0461E01DF6ED200051C37E /* N44Matrix.h */,
 				DC0461E11DF6ED200051C37E /* Optional.h */,
 			);
-			name = Global;
-			path = ../sources/Global;
+			name = global;
+			path = ../sources/global;
 			sourceTree = SOURCE_ROOT;
 		};
 		DC0461EB1DF6EECE0051C37E /* TestSuite */ = {
