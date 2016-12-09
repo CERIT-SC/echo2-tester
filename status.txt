@@ -1,3 +1,0 @@
-Known problems
---------------
-- framework cannot be compiled using xcode, Boost - Program Options library is not yet included

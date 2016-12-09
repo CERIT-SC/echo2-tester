@@ -482,9 +482,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lboost_program_options";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -523,8 +526,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-lboost_program_options";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -588,7 +594,6 @@
 		DC0461EF1DF6EECE0051C37E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "-lcppunit";
 				OTHER_LIBTOOLFLAGS = "";
@@ -599,7 +604,6 @@
 		DC0461F01DF6EECE0051C37E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "-lcppunit";
 				OTHER_LIBTOOLFLAGS = "";
@@ -626,6 +630,7 @@
 				DC0461A51DF6E9D30051C37E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC0461AF1DF6EBA20051C37E /* Build configuration list for PBXNativeTarget "matrix_generator" */ = {
 			isa = XCConfigurationList;
@@ -634,6 +639,7 @@
 				DC0461B11DF6EBA20051C37E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC0461BA1DF6EBC70051C37E /* Build configuration list for PBXNativeTarget "sequence_generator" */ = {
 			isa = XCConfigurationList;
@@ -642,6 +648,7 @@
 				DC0461BC1DF6EBC70051C37E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC0461C51DF6EBF20051C37E /* Build configuration list for PBXNativeTarget "quality_measurer" */ = {
 			isa = XCConfigurationList;
@@ -650,6 +657,7 @@
 				DC0461C71DF6EBF20051C37E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC0461EE1DF6EECE0051C37E /* Build configuration list for PBXNativeTarget "TestSuite" */ = {
 			isa = XCConfigurationList;
@@ -658,6 +666,7 @@
 				DC0461F01DF6EECE0051C37E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
