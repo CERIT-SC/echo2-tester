@@ -11,8 +11,8 @@
 #include <fstream>
 #include <cstdlib>
 #include "MatrGenOptions.h"
-#include "../Global/N44Matrix.h"
-#include "../Global/Optional.h"
+#include "../global/N44Matrix.h"
+#include "../global/Optional.h"
 using namespace std;
 
 N44Matrix generateRandMatrix(unsigned length, float mean);

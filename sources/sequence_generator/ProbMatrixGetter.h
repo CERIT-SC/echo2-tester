@@ -13,7 +13,7 @@
 #include <fstream>
 #include <memory>
 #include <cctype>
-#include "../Global/N44Matrix.h"
+#include "../global/N44Matrix.h"
 
 //probability is in %
 N44Matrix generateProbMatrix(unsigned uniformProbability, unsigned matrixLength);
