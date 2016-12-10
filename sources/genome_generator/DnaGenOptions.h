@@ -36,9 +36,11 @@ po::variables_map loadOptions(int argc, const char * argv[]) {
     optionDescription.add_options()
     ("help", "Produce help message\n")
     
-    ("length,l", po::value<string>(), "Length of generated genome (required)")
+    ("length,l", po::value<string>(), "Length of generated fragments (required)")
+    ("num,n", po::value<unsigned>()->default_value(1), "Number of generated fragments")
     ("seed,s", po::value<unsigned>(), "Sets seed for pseudo-random generation (optional)")
-    ("file,f", po::value<string>()->default_value("genome.txt"), "Name of file for saving generated genome\n")
+    ("file,f", po::value<string>()->default_value("genome.fa"),
+        "Name of file for saving generated genome\n")
     
     ("prob-a,a", po::value<int>()->default_value(25), "Sets probalibity of base A")
     ("prob-c,c", po::value<int>()->default_value(25), "Sets probalibity of base C")
@@ -58,6 +60,10 @@ po::variables_map loadOptions(int argc, const char * argv[]) {
     
     //print help
     if (options.count("help")) {
+        cout << "Genome Generator" << endl;
+        cout << "This program generates pseudo-random genome fragments in fasta format." << endl;
+        cout << "Program will generate -n fragments of length -l." << endl << endl;
+        
         cout << optionDescription << endl;
         exit(0);
     }
@@ -67,7 +73,8 @@ po::variables_map loadOptions(int argc, const char * argv[]) {
 
 unsigned long long getValidLength(po::variables_map options) {
     if (!options.count("length")) {
-        cerr << "Genome length is required." << endl << endl;
+        cerr << "Genome length must be specified." << endl;
+        cerr << "For help, run with: --help" << endl << endl;
         exit(1);
     }
     

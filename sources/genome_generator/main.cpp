@@ -27,6 +27,7 @@ struct Probabilities {
 void genomeGenerator(ostream & os, Probabilities prob, unsigned long long length);
 
 
+
 int main(int argc, const char * argv[]) {
   
     //load options
