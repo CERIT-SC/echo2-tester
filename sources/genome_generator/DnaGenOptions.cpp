@@ -1,46 +1,26 @@
 //
-//  DnaGenOptions.h
-//  testing system
+//  DnaGenOptions.cpp
+//  Corrector Tester
 //
-//  Created by Miloš Šimek on 27.03.15.
-//  Copyright (c) 2015 Miloš Šimek. All rights reserved.
+//  Created by Miloš Šimek on 10/12/2016.
+//
 //
 
-#ifndef testing_system_dnagenoptions_h
-#define testing_system_dnagenoptions_h
+#include "DnaGenOptions.hpp"
 
-#include <iostream>
-#include <exception>
-#include <string>
-#include <sstream>
-#include <cctype>
-#include <algorithm>
-#include <boost/program_options.hpp>
-
-namespace po = boost::program_options;
-using namespace std;
-
-//function prototypes
-po::variables_map loadOptions(int argc, const char * argv[]);
-unsigned long long getValidLength(po::variables_map options);
-unsigned getValidProbability(po::variables_map options, const char * optionName);
-
-
-
-//implementation
-po::variables_map loadOptions(int argc, const char * argv[]) {
-    
+DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
     po::options_description optionDescription("Options");
     
     //setup options
     optionDescription.add_options()
     ("help", "Produce help message\n")
     
-    ("length,l", po::value<string>(), "Length of generated fragments (required)")
-    ("num,n", po::value<unsigned>()->default_value(1), "Number of generated fragments")
-    ("seed,s", po::value<unsigned>(), "Sets seed for pseudo-random generation (optional)")
+    ("length,l", po::value<string>(), "Length of generated fragments (required)\n"
+     "Length can have suffix k (kilo), m (mega)\ng (giga) t (terra)")
+    ("num,n", po::value<int>()->default_value(1), "Number of generated fragments")
+    ("seed,s", po::value<unsigned>(), "Sets seed for pseudo-random generation")
     ("file,f", po::value<string>()->default_value("genome.fa"),
-        "Name of file for saving generated genome\n")
+     "Name of file for saving generated fragments\n")
     
     ("prob-a,a", po::value<int>()->default_value(25), "Sets probalibity of base A")
     ("prob-c,c", po::value<int>()->default_value(25), "Sets probalibity of base C")
@@ -48,7 +28,6 @@ po::variables_map loadOptions(int argc, const char * argv[]) {
     ("prob-t,t", po::value<int>()->default_value(25), "Sets probability of base T");
     
     //load options
-    po::variables_map options;
     try {
         po::store(po::parse_command_line(argc, argv, optionDescription), options);
     } catch (exception &e) {
@@ -57,28 +36,46 @@ po::variables_map loadOptions(int argc, const char * argv[]) {
     }
     po::notify(options);
     
-    
     //print help
     if (options.count("help")) {
         cout << "Genome Generator" << endl;
         cout << "This program generates pseudo-random genome fragments in fasta format." << endl;
         cout << "Program will generate -n fragments of length -l." << endl << endl;
         
+        cout << "Only length of fragments is required." << endl;
+        cout << "Length can have suffix k (kilo), m (mega) g (giga) t (tera)" << endl;
+        cout << "For example: 4, 4k, 7M, 9.4G" << endl << endl;
+        
         cout << optionDescription << endl;
         exit(0);
     }
     
-    return options;
+    //parse
+    parseLength();
+    parseNum();
+    parseSeed();
+    parseFileName();
+    parseProbabilities();
 }
 
-unsigned long long getValidLength(po::variables_map options) {
+
+ULL DnaGenOptions::getLenthg() { return length; }
+unsigned DnaGenOptions::getNum() { return num; }
+Optional<unsigned> DnaGenOptions::getSeed() { return seed; }
+string DnaGenOptions::getFileName() { return fileName; }
+Probabilities DnaGenOptions::getProbabilities() { return prob; }
+
+
+//private
+void DnaGenOptions::parseLength() {
     if (!options.count("length")) {
-        cerr << "Genome length must be specified." << endl;
+        cerr << "Fragment length must be specified." << endl;
         cerr << "For help, run with: --help" << endl << endl;
         exit(1);
     }
     
     //load length in standard numeric format or with suffix (k,m,g,t,K,M,G,T)
+    //i.e. 4, 7k, 9.4M
     //load length
     double length;
     
@@ -86,12 +83,12 @@ unsigned long long getValidLength(po::variables_map options) {
     lengthStream >> length;
     
     if(lengthStream.fail()) {
-        cerr << "Genome length was entered incorrectly." << endl << endl;
+        cerr << "Fragment length was entered incorrectly." << endl << endl;
         exit(1);
     }
     
     if (length <= 0) {
-        cerr << "Genome length must have non-zero value." << endl << endl;
+        cerr << "Fragment length must have non-zero value." << endl << endl;
         exit(1);
     }
     
@@ -107,22 +104,53 @@ unsigned long long getValidLength(po::variables_map options) {
         else if(suffix == "g")  length *= 1000000000ull;
         else if(suffix == "t")  length *= 1000000000000ull;
         else {
-            cerr << "Genome length suffix was entered incorrectly." << endl << endl;
+            cerr << "Fragment length suffix was entered incorrectly." << endl << endl;
             exit(1);
         }
     }
     
     //whole number test
-    unsigned long long finalLenght = length;
-    if(finalLenght < length) {
-        cerr << "Genome length must be whole number." << endl << endl;
+    if(floor(length) < length) {
+        cerr << "Fragment length must be whole number." << endl << endl;
         exit(1);
     }
     
-    return finalLenght;
+    this->length = length;
 }
 
-unsigned getValidProbability(po::variables_map options, const char * optionName) {
+void DnaGenOptions::parseNum() {
+    int fragNum = options["num"].as<int>();
+    
+    if(fragNum < 1) {
+        cerr << "Number of generated fragments must be 1 or higher." << endl << endl;
+        exit(1);
+    }
+    
+    num = fragNum;
+}
+
+void DnaGenOptions::parseSeed() {
+    if(options.count("seed")) seed = options["seed"].as<unsigned>();
+    else seed = Opt::NoValue;
+}
+
+void DnaGenOptions::parseFileName() {
+    fileName = options["file"].as<string>();
+}
+
+void DnaGenOptions::parseProbabilities() {
+    prob.A = getParsedProbability("prob-a");
+    prob.C = getParsedProbability("prob-c");
+    prob.G = getParsedProbability("prob-g");
+    prob.T = getParsedProbability("prob-t");
+    
+    if((prob.A + prob.C + prob.G + prob.T) != 100) {
+        cerr << "Sum of probabilities must be 100." << endl << endl;
+        exit(1);
+    }
+}
+
+unsigned DnaGenOptions::getParsedProbability(const char * optionName) {
     int probability;
     
     try {
@@ -139,6 +167,3 @@ unsigned getValidProbability(po::variables_map options, const char * optionName)
     
     return probability;
 }
-
-
-#endif
