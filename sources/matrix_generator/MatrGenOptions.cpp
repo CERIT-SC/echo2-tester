@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "MatrGenOptions.h"
+#include "MatrGenOptions.hpp"
 
 MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
     //define options

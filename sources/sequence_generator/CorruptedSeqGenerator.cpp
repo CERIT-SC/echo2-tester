@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "CorruptedSeqGenerator.h"
+#include "CorruptedSeqGenerator.hpp"
 
 
 void generateCorrSequences(const string & genome, ULL seqCount,

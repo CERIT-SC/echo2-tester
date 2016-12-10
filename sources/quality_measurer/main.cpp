@@ -10,9 +10,10 @@
 #include <exception>
 #include <sstream>
 #include <iomanip>
-#include "QMeasOptions.h"
-#include "Measuring.h"
-#include "../global/Optional.h"
+
+#include "QMeasOptions.hpp"
+#include "Measuring.hpp"
+#include "../global/Optional.hpp"
 using namespace std;
 
 string loadGenome(string genomeFileName);

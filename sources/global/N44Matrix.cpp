@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "N44Matrix.h"
+#include "N44Matrix.hpp"
 
 N44Matrix::N44Matrix(unsigned length) {
     matrix.resize(length);

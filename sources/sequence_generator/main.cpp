@@ -12,10 +12,11 @@
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
-#include "SeqGenOptions.h"
-#include "ProbMatrixGetter.h"
-#include "CorruptedSeqGenerator.h"
-#include "../global/N44Matrix.h"
+
+#include "SeqGenOptions.hpp"
+#include "ProbMatrixGetter.hpp"
+#include "CorruptedSeqGenerator.hpp"
+#include "../global/N44Matrix.hpp"
 using namespace std;
 
 N44Matrix getMatrix(SeqGenOptions& options);

@@ -13,7 +13,8 @@
 #include <cassert>
 #include <fstream>
 #include <random>
-#include "../global/N44Matrix.h"
+
+#include "../global/N44Matrix.hpp"
 using namespace std;
 typedef unsigned long long ULL;
 

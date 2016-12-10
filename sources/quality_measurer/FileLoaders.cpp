@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "FileLoaders.h"
+#include "FileLoaders.hpp"
 
 string loadNextSeq(ifstream& inputFile) {
     string seq;

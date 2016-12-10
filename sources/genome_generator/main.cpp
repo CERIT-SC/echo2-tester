@@ -14,7 +14,7 @@
 #include <fstream>
 #include <boost/program_options.hpp>
 
-#include "DnaGenOptions.h"
+#include "DnaGenOptions.hpp"
 
 namespace po = boost::program_options;
 using namespace std;

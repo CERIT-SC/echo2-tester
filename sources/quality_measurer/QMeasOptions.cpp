@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "QMeasOptions.h"
+#include "QMeasOptions.hpp"
 
 QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
     //define parameters

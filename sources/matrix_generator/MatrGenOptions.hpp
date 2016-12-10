@@ -12,7 +12,8 @@
 #include <string>
 #include <iostream>
 #include <boost/program_options.hpp>
-#include "../global/Optional.h"
+
+#include "../global/Optional.hpp"
 
 using namespace std;
 namespace po = boost::program_options;

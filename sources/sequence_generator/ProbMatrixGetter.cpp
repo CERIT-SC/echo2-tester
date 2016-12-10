@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "ProbMatrixGetter.h"
+#include "ProbMatrixGetter.hpp"
 
 N44Matrix generateProbMatrix(unsigned uniformProbability, unsigned matrixLength) {
     N44Matrix probMatrix(matrixLength);

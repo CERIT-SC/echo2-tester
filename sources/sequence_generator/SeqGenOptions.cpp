@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "SeqGenOptions.h"
+#include "SeqGenOptions.hpp"
 
 SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     //define parameters

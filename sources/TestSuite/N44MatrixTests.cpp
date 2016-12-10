@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "N44MatrixTests.h"
+#include "N44MatrixTests.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(N44MatrixTests);
 

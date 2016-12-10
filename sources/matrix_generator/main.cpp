@@ -10,9 +10,10 @@
 #include <ctime>
 #include <fstream>
 #include <cstdlib>
-#include "MatrGenOptions.h"
-#include "../global/N44Matrix.h"
-#include "../global/Optional.h"
+
+#include "MatrGenOptions.hpp"
+#include "../global/N44Matrix.hpp"
+#include "../global/Optional.hpp"
 using namespace std;
 
 N44Matrix generateRandMatrix(unsigned length, float mean);

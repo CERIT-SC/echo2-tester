@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "Measuring.h"
+#include "Measuring.hpp"
 
 MeasuredData measure(string& genome,
              ifstream& corruptedSeqFile, ifstream& correctedSeqFile,
