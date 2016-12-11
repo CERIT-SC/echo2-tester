@@ -6,6 +6,13 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
+// Optional can have any value of Type
+// Or can have special value of Opt::NoValue
+// Access to the internal value is through operator *
+// If variable don't have any value and operator * is used,
+// then Optional will throw an exception.
+
+
 #ifndef optional_Optional_h
 #define optional_Optional_h
 
