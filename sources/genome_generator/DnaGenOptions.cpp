@@ -42,7 +42,7 @@ DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
         cout << "This program generates pseudo-random genome fragments in fasta format." << endl;
         cout << "Program will generate -n fragments of length -l." << endl << endl;
         
-        cout << "Only length of fragments is required." << endl;
+        cout << "Only parameter length is required." << endl;
         cout << "Length can have suffix k (kilo), m (mega) g (giga) t (tera)" << endl;
         cout << "For example: 4, 4k, 7M, 9.4G" << endl << endl;
         
