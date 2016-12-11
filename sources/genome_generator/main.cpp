@@ -14,48 +14,61 @@
 #include <fstream>
 #include <boost/program_options.hpp>
 
-#include "DnaGenOptions.h"
+#include "DnaGenOptions.hpp"
 
 namespace po = boost::program_options;
 using namespace std;
+typedef unsigned long long ULL;
 
-
-struct Probabilities {
-    unsigned A, C, G, T;
-};
-
-void genomeGenerator(ostream & os, Probabilities prob, unsigned long long length);
+char generateBase(Probabilities prob);
 
 
 
 int main(int argc, const char * argv[]) {
   
     //load options
-    po::variables_map options = loadOptions(argc, argv);
-    unsigned long long length = getValidLength(options);
+    DnaGenOptions options(argc, argv);
     
-    Probabilities prob;
-    prob.A = getValidProbability(options, "prob-a");
-    prob.C = getValidProbability(options, "prob-c");
-    prob.G = getValidProbability(options, "prob-g");
-    prob.T = getValidProbability(options, "prob-t");
+    //set random generator seed
+    if (options.getSeed()) srand(*options.getSeed());
+    else                   srand(static_cast<unsigned>(time(nullptr)));
     
-    if((prob.A + prob.C + prob.G + prob.T) != 100) {
-        cerr << "Sum of probabilities must be 100." << endl << endl;
+    //init output file
+    ofstream genomeFile(options.getFileName());
+    if (!genomeFile.is_open()) {
+        cerr << "Could not open output file" << endl << endl;
         exit(1);
     }
     
-    //set random generator seed
-    if (options.count("seed")) { srand(options["seed"].as<unsigned>()); }
-    else                       { srand(static_cast<unsigned>(time(nullptr))); }
+    //GENERATING FRAGMENTS
+    cout << "Generating" << endl;
+    Probabilities probs = options.getProbabilities();
+    string line(80, '_');   //line length set up to 80
     
-    //generate and safe to text file
-    ofstream genomeFile(options["file"].as<string>());
-    if(!genomeFile.is_open()) {
-        cerr << "Could not open output file." << endl << endl;
+    for (unsigned fragment = 0; fragment < options.getNum(); fragment++) {
+        genomeFile << ">Randomly generated fragment number " << fragment + 1 << "\n";
+        ULL baseCount = options.getLenthg();
+        
+        //generate lines
+        while (baseCount > 80) {
+            for (char& base: line) base = generateBase(probs);
+            genomeFile << line << "\n";
+            baseCount -= 80;
+        }
+        
+        //generate last reminder line
+        if (baseCount > 0) {
+            while (baseCount > 0) {
+                genomeFile << generateBase(probs);
+                baseCount--;
+            }
+            genomeFile << "\n";
+        }
+        
+        if (fragment + 1 < options.getNum()) genomeFile << "\n";
     }
-    genomeGenerator(genomeFile, prob, length);
     
+    cout << "Done" << endl;
     return 0;
 }
 
@@ -63,15 +76,11 @@ int main(int argc, const char * argv[]) {
 #define END_C prob.A + prob.C
 #define END_G prob.A + prob.C + prob.G
 
-//possible speed improvement - use string as a buffer
-void genomeGenerator(ostream & os, Probabilities prob, unsigned long long length) {
+char generateBase(Probabilities prob) {
+    int randNumber = (rand() % 100) + 1;
     
-    for(unsigned long long index = 0; index < length; index++) {
-        int randNumber = rand() % 100 + 1;
-        
-        if (randNumber <= END_A) os << 'A';
-        if (randNumber > END_A && randNumber <= END_C) os << 'C';
-        if (randNumber > END_C && randNumber <= END_G) os << 'G';
-        if (randNumber > END_G)  os << 'T';
-    }
+    if (randNumber <= END_A) return 'A';
+    if (randNumber <= END_C) return 'C';
+    if (randNumber <= END_G) return 'G';
+    return 'T';
 }
