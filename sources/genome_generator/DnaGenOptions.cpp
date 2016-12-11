@@ -135,6 +135,11 @@ void DnaGenOptions::parseSeed() {
 }
 
 void DnaGenOptions::parseFileName() {
+    if(options["file"].as<string>() == "") {
+        cerr << "File name cannot be empty." << endl << endl;
+        exit(1);
+    }
+    
     fileName = options["file"].as<string>();
 }
 
