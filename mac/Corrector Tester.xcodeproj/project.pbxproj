@@ -25,6 +25,7 @@
 		DC0461ED1DF6EECE0051C37E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461EC1DF6EECE0051C37E /* main.cpp */; };
 		DC0461F31DF6EEFA0051C37E /* N44MatrixTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461F11DF6EEFA0051C37E /* N44MatrixTests.cpp */; };
 		DC0461F41DF87E3B0051C37E /* N44Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */; };
+		DCF180091DFE224800818057 /* DnaGenOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCF180081DFE224800818057 /* DnaGenOptions.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,7 +79,6 @@
 /* Begin PBXFileReference section */
 		DC04619F1DF6E9D30051C37E /* genome_generator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = genome_generator; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0461A11DF6E9D30051C37E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		DC0461A61DF6EADE0051C37E /* DnaGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DnaGenOptions.hpp; sourceTree = "<group>"; };
 		DC0461AB1DF6EBA20051C37E /* matrix_generator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = matrix_generator; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0461AD1DF6EBA20051C37E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DC0461B61DF6EBC70051C37E /* sequence_generator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sequence_generator; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +106,8 @@
 		DC0461EC1DF6EECE0051C37E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DC0461F11DF6EEFA0051C37E /* N44MatrixTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = N44MatrixTests.cpp; sourceTree = "<group>"; };
 		DC0461F21DF6EEFA0051C37E /* N44MatrixTests.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = N44MatrixTests.hpp; sourceTree = "<group>"; };
+		DCF180071DFE21E500818057 /* DnaGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DnaGenOptions.hpp; sourceTree = "<group>"; };
+		DCF180081DFE224800818057 /* DnaGenOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DnaGenOptions.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				DC0461A11DF6E9D30051C37E /* main.cpp */,
-				DC0461A61DF6EADE0051C37E /* DnaGenOptions.hpp */,
+				DCF180071DFE21E500818057 /* DnaGenOptions.hpp */,
+				DCF180081DFE224800818057 /* DnaGenOptions.cpp */,
 			);
 			name = genome_generator;
 			path = ../sources/genome_generator;
@@ -392,6 +395,7 @@
 			files = (
 				DC0461A21DF6E9D30051C37E /* main.cpp in Sources */,
 				DC0461E21DF6ED200051C37E /* N44Matrix.cpp in Sources */,
+				DCF180091DFE224800818057 /* DnaGenOptions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

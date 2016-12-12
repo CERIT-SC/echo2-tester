@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <cmath>
 #include <boost/program_options.hpp>
-#include "../global/Optional.h"
+#include "../global/Optional.hpp"
 
 namespace po = boost::program_options;
 using namespace std;
