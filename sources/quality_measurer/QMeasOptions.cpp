@@ -40,6 +40,13 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
     //print help
     if (optionMap.count("help")) {
         opState = OPS_HELP;
+        
+        cout << endl;
+        cout << "Quality Measurer" << endl;
+        cout << "This tool takes genome file (in fasta format), corrupted and" << endl;
+        cout << "corrected sequences (in fastq format) and sequence mapping file." << endl;
+        cout << "Program produces statistics about quality of corrections." << endl;
+        cout << endl;
         cout << options << endl;
         return;
     }

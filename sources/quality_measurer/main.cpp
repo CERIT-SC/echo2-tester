@@ -77,7 +77,9 @@ string loadGenome(string genomeFileName) {
     string genome;
     
     if (!genomeFile.is_open()) {
-        cerr << "Cannot open genome file" << endl << endl;
+        cerr << "Cannot open genome file" << endl;
+        cerr << "For help, run with --help" << endl;
+        cerr << endl;
         exit(1);
     }
     
