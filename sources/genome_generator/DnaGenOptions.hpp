@@ -54,5 +54,7 @@ private:
     unsigned getParsedProbability(const char * optionName);
 };
 
+//possible improvement - instead of using exit directly, options can
+//be altered to return status as with other programs
 
 #endif /* DnaGenOptions_hpp */

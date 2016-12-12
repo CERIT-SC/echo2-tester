@@ -38,15 +38,17 @@ DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
     
     //print help
     if (options.count("help")) {
-        cout << "Genome Generator" << endl;
-        cout << "This program generates pseudo-random genome fragments in fasta format." << endl;
-        cout << "Program will generate -n fragments of length -l." << endl << endl;
         
+        cout << endl;
+        cout << "Genome Generator" << endl;
+        cout << "This tool generates pseudo-random genome fragments in fasta format." << endl;
+        cout << "Program will generate -n fragments of length -l." << endl;
         cout << "Only parameter length is required." << endl;
         cout << "Length can have suffix k (kilo), m (mega) g (giga) t (tera)" << endl;
-        cout << "For example: 4, 4k, 7M, 9.4G" << endl << endl;
-        
+        cout << "For example: 4, 4k, 7M, 9.4G" << endl;
+        cout << endl;
         cout << optionDescription << endl;
+        
         exit(0);
     }
     
@@ -69,7 +71,7 @@ Probabilities DnaGenOptions::getProbabilities() { return prob; }
 //private
 void DnaGenOptions::parseLength() {
     if (!options.count("length")) {
-        cerr << "Fragment length must be specified." << endl;
+        cerr << "Fragment length must be specified" << endl;
         cerr << "For help, run with: --help" << endl << endl;
         exit(1);
     }
@@ -83,12 +85,12 @@ void DnaGenOptions::parseLength() {
     lengthStream >> length;
     
     if(lengthStream.fail()) {
-        cerr << "Fragment length was entered incorrectly." << endl << endl;
+        cerr << "Fragment length was entered incorrectly" << endl << endl;
         exit(1);
     }
     
     if (length <= 0) {
-        cerr << "Fragment length must have non-zero value." << endl << endl;
+        cerr << "Fragment length must have non-zero value" << endl << endl;
         exit(1);
     }
     
@@ -104,14 +106,14 @@ void DnaGenOptions::parseLength() {
         else if(suffix == "g")  length *= 1000000000ull;
         else if(suffix == "t")  length *= 1000000000000ull;
         else {
-            cerr << "Fragment length suffix was entered incorrectly." << endl << endl;
+            cerr << "Fragment length suffix was entered incorrectly" << endl << endl;
             exit(1);
         }
     }
     
     //whole number test
     if(floor(length) < length) {
-        cerr << "Fragment length must be whole number." << endl << endl;
+        cerr << "Fragment length must be whole number" << endl << endl;
         exit(1);
     }
     
@@ -122,7 +124,7 @@ void DnaGenOptions::parseNum() {
     int fragNum = options["num"].as<int>();
     
     if(fragNum < 1) {
-        cerr << "Number of generated fragments must be 1 or higher." << endl << endl;
+        cerr << "Number of generated fragments must be 1 or higher" << endl << endl;
         exit(1);
     }
     
@@ -136,7 +138,7 @@ void DnaGenOptions::parseSeed() {
 
 void DnaGenOptions::parseFileName() {
     if(options["file"].as<string>() == "") {
-        cerr << "File name cannot be empty." << endl << endl;
+        cerr << "File name cannot be empty" << endl << endl;
         exit(1);
     }
     
@@ -150,7 +152,7 @@ void DnaGenOptions::parseProbabilities() {
     prob.T = getParsedProbability("prob-t");
     
     if((prob.A + prob.C + prob.G + prob.T) != 100) {
-        cerr << "Sum of probabilities must be 100." << endl << endl;
+        cerr << "Sum of probabilities must be 100" << endl << endl;
         exit(1);
     }
 }
@@ -161,12 +163,12 @@ unsigned DnaGenOptions::getParsedProbability(const char * optionName) {
     try {
         probability = options[optionName].as<int>();
     } catch (exception &e) {
-        cerr << "Probability value entered incorrectly." << endl << endl;
+        cerr << "Probability value entered incorrectly" << endl << endl;
         exit(1);
     }
     
     if (probability < 0 || probability > 100) {
-        cerr << "Incorrect probability value." << endl << endl;
+        cerr << "Incorrect probability value" << endl << endl;
         exit(1);
     }
     
