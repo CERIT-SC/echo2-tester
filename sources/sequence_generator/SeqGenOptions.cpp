@@ -12,7 +12,7 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     //define parameters
     po::options_description requiredOptions("Required options");
     requiredOptions.add_options()
-    ("genome,g", po::value<string>()->default_value("genome.txt"),
+    ("genome,g", po::value<string>()->default_value("genome.fa"),
      "Specifies genome file")
     ("seq-num,n", po::value<long long>(), "Number of sequences generated")
     ("seq-len,l", po::value<int>(), "Sequence length");
@@ -22,11 +22,11 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     probabilityOptions.add_options()
     ("prob-uniform,u", po::value<int>(), "Uniform error probability (in %)")
     ("prob-file,f", po::value<string>(),
-     "File with 4x4xN probability matrix with probabilities for bases in sequence\n"
+     "File with 4x4xN probability matrix with probabilities for every base in sequence.\n"
      "    \tThere must be at least one 4x4 matrix specified in a file. Last 4x4 matrix from "
-     "file will be used for all remaining base positions in sequence while generating errors.");
+     "file will be used for all remaining base positions.");
     
-    po::options_description other("Other");
+    po::options_description other("Other (optional)");
     other.add_options()
     ("seq-file,q", po::value<string>()->default_value("corrupted.fastq"),
         "Output sequence file")
@@ -50,6 +50,18 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     //print help
     if (optionMap.count("help")) {
         opState = OPS_HELP;
+        
+        cout << endl;
+        cout << "Sequence Generator" << endl;
+        cout << "This tool randomly generates seuences from genome file (-g)." << endl;
+        cout << "Genome must be in fasta format. There will be -n sequences" << endl;
+        cout << "generated of length -l. Tool introduces errors to sequences" << endl;
+        cout << "using pseudo-random generator. How errors should be introduced" << endl;
+        cout << "must be specified either using -u or -f." << endl;
+        cout << "There are 2 files as a result: sequences with errors in fastq" << endl;
+        cout << "format and mapping file that maps sequences to their original" << endl;
+        cout << "positions in genome." << endl;
+        cout << endl;
         cout << allOptions << endl;
         return;
     }
@@ -158,6 +170,8 @@ void SeqGenOptions::checkForExistence(const char * option, const char * errOutpu
 }
 
 void SeqGenOptions::setOptionError(const char * message) {
-    cerr << message << endl << endl;
+    cerr << message << endl;
+    cerr << "For help, run with --help" << endl;
+    cerr << endl;
     opState = OPS_ERR;
 }
