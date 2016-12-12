@@ -200,12 +200,12 @@
 			isa = PBXGroup;
 			children = (
 				DC0461B81DF6EBC70051C37E /* main.cpp */,
-				DC0461CB1DF6ECB10051C37E /* CorruptedSeqGenerator.cpp */,
 				DC0461CC1DF6ECB10051C37E /* CorruptedSeqGenerator.hpp */,
-				DC0461CD1DF6ECB10051C37E /* ProbMatrixGetter.cpp */,
+				DC0461CB1DF6ECB10051C37E /* CorruptedSeqGenerator.cpp */,
 				DC0461CE1DF6ECB10051C37E /* ProbMatrixGetter.hpp */,
-				DC0461CF1DF6ECB10051C37E /* SeqGenOptions.cpp */,
+				DC0461CD1DF6ECB10051C37E /* ProbMatrixGetter.cpp */,
 				DC0461D01DF6ECB10051C37E /* SeqGenOptions.hpp */,
+				DC0461CF1DF6ECB10051C37E /* SeqGenOptions.cpp */,
 			);
 			name = sequence_generator;
 			path = ../sources/sequence_generator;
@@ -215,12 +215,12 @@
 			isa = PBXGroup;
 			children = (
 				DC0461C31DF6EBF20051C37E /* main.cpp */,
-				DC0461D41DF6ECC30051C37E /* FileLoaders.cpp */,
 				DC0461D51DF6ECC30051C37E /* FileLoaders.hpp */,
-				DC0461D61DF6ECC30051C37E /* Measuring.cpp */,
+				DC0461D41DF6ECC30051C37E /* FileLoaders.cpp */,
 				DC0461D71DF6ECC30051C37E /* Measuring.hpp */,
-				DC0461D81DF6ECC30051C37E /* QMeasOptions.cpp */,
+				DC0461D61DF6ECC30051C37E /* Measuring.cpp */,
 				DC0461D91DF6ECC30051C37E /* QMeasOptions.hpp */,
+				DC0461D81DF6ECC30051C37E /* QMeasOptions.cpp */,
 			);
 			name = quality_measurer;
 			path = ../sources/quality_measurer;
@@ -229,8 +229,8 @@
 		DC0461DE1DF6ECF70051C37E /* global */ = {
 			isa = PBXGroup;
 			children = (
-				DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */,
 				DC0461E01DF6ED200051C37E /* N44Matrix.hpp */,
+				DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */,
 				DC0461E11DF6ED200051C37E /* Optional.hpp */,
 			);
 			name = global;
