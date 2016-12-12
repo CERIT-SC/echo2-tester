@@ -38,6 +38,15 @@ MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
     //print help
     if (optionMap.count("help")) {
         opState = OPS_HELP;
+        
+        cout << endl;
+        cout << "Matrix Generator" << endl;
+        cout << "This tool generates 3 dimensional probability matrix" << endl;
+        cout << "for the purposes of setting error rate independently for" << endl;
+        cout << "each base of a sequence." << endl;
+        cout << "Matrix is generated using pseudo-random generator and is" << endl;
+        cout << "configured by setting its length and mean." << endl;
+        cout << endl;
         cout << options << endl;
         return;
     }
@@ -99,6 +108,8 @@ void MatrGenOptions::checkForExistence(const char * option, const char * errOutp
 }
 
 void MatrGenOptions::setOptionError(const char * message) {
-    cerr << message << endl << endl;
+    cerr << message << endl;
+    cerr << "For help, run with --help" << endl;
+    cerr << endl;
     opState = OPS_ERR;
 }
