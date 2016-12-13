@@ -14,6 +14,8 @@
 #include <exception>
 #include <boost/program_options.hpp>
 
+#include "../global/Optional.hpp"
+
 using namespace std;
 namespace po = boost::program_options;
 typedef unsigned long long ULL;
@@ -35,8 +37,7 @@ public:
     unsigned    getSeqLength();
     string      getOutputSequenceFileName();
     string      getOutputMapFileName();
-    bool        randGenSeedIsSet();
-    unsigned    randGenSeed();
+    Optional<unsigned> randGenSeed();
     
     //only one way to retrieve probability is valid in given run
     bool        isProbabilityUniform();

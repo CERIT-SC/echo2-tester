@@ -58,7 +58,7 @@ int main(int argc, const char * argv[]) {
     
     //setup random generator seed
     unsigned randGenSeed;
-    if(options.randGenSeedIsSet()) randGenSeed = options.randGenSeed();
+    if (options.randGenSeed()) randGenSeed = *options.randGenSeed();
     else randGenSeed = static_cast<unsigned>(time(nullptr));
     
     //generate corrupted sequences and save results to files

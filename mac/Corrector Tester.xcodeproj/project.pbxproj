@@ -200,12 +200,12 @@
 			isa = PBXGroup;
 			children = (
 				DC0461B81DF6EBC70051C37E /* main.cpp */,
+				DC0461D01DF6ECB10051C37E /* SeqGenOptions.hpp */,
+				DC0461CF1DF6ECB10051C37E /* SeqGenOptions.cpp */,
 				DC0461CC1DF6ECB10051C37E /* CorruptedSeqGenerator.hpp */,
 				DC0461CB1DF6ECB10051C37E /* CorruptedSeqGenerator.cpp */,
 				DC0461CE1DF6ECB10051C37E /* ProbMatrixGetter.hpp */,
 				DC0461CD1DF6ECB10051C37E /* ProbMatrixGetter.cpp */,
-				DC0461D01DF6ECB10051C37E /* SeqGenOptions.hpp */,
-				DC0461CF1DF6ECB10051C37E /* SeqGenOptions.cpp */,
 			);
 			name = sequence_generator;
 			path = ../sources/sequence_generator;

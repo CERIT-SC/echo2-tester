@@ -88,13 +88,11 @@ string SeqGenOptions::getOutputMapFileName() {
     return optionMap["map-file"].as<string>();
 }
 
-bool SeqGenOptions::randGenSeedIsSet() {
-    return optionMap.count("seed");
+Optional<unsigned> SeqGenOptions::randGenSeed() {
+    if (optionMap.count("seed")) return optionMap["seed"].as<unsigned>();
+    else return Opt::NoValue;
 }
 
-unsigned SeqGenOptions::randGenSeed() {
-    return optionMap["seed"].as<unsigned>();
-}
 
 bool SeqGenOptions::isProbabilityUniform() {
     return optionMap.count("prob-uniform");
