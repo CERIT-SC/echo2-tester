@@ -1,7 +1,9 @@
 include ../Makefile.inc
 
-genome_generator: main.o
-	${CXX} -o $@ main.o ${BOOST}
+OBJ=main.o DnaGenOptions.o
+
+genome_generator: ${OBJ}
+	${CXX} -o $@ ${OBJ} ${BOOST}
 
 clean:
-	rm -f main.o genome_generator
+	rm -f ${OBJ} genome_generator
