@@ -7,9 +7,7 @@ echo ""
 echo "Compiling genome_generator"
 cd sources/genome_generator
 
-g++ -std=c++11 -O3 -m64 *.hpp *.cpp ../global/*.hpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
-
-rm *.gch ../global/*.gch
+g++ -std=c++11 -O3 -m64 *.cpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
 
 cd ../..
 
@@ -22,9 +20,7 @@ echo ""
 echo "Compiling matrix_generator"
 cd sources/matrix_generator
 
-g++ -std=c++11 -O3 -m64 *.hpp *.cpp ../global/*.hpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
-
-rm *.gch ../global/*.gch
+g++ -std=c++11 -O3 -m64 *.cpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
 
 cd ../..
 
@@ -36,9 +32,7 @@ echo ""
 echo "Compiling quality_measurer"
 cd sources/quality_measurer
 
-g++ -std=c++11 -O3 -m64 *.hpp *.cpp ../global/*.hpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
-
-rm *.gch ../global/*.gch
+g++ -std=c++11 -O3 -m64 *.cpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
 
 cd ../..
 
@@ -50,9 +44,7 @@ echo ""
 echo "Compiling sequence_generator"
 cd sources/sequence_generator
 
-g++ -std=c++11 -O3 -m64 *.hpp *.cpp ../global/*.hpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
-
-rm *.gch ../global/*.gch
+g++ -std=c++11 -O3 -m64 *.cpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
 
 cd ../..
 
