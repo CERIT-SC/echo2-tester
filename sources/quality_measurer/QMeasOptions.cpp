@@ -32,8 +32,7 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
     try {
         po::store(po::parse_command_line(argc, argv, options), optionMap);
     } catch (exception &e) {
-        opState = OPS_ERR;
-        cerr << "Incorrect input: " << e.what() << endl << endl;
+        setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
     
@@ -50,6 +49,8 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
         cout << options << endl;
         return;
     }
+    
+    checkForOptionValidity();
 }
 
 OptionsState QMeasOptions::optionsState() {
@@ -77,4 +78,44 @@ Optional<string> QMeasOptions::getOutputFile() {
         return Opt::NoValue;
     }
     return optionMap["file"].as<string>();
+}
+
+//private
+void QMeasOptions::checkForOptionValidity() {
+    //genome file
+    if (optionMap["genome"].as<string>() == "") {
+        setOptionError("Genome file name cannot be empty");
+        return;
+    }
+    
+    //corrupted sequences
+    if (optionMap["corrupted"].as<string>() == "") {
+        setOptionError("Corrupted sequences file name cannot be empty");
+        return;
+    }
+    
+    //corrected sequences
+    if (optionMap["corrected"].as<string>() == "") {
+        setOptionError("Corrected sequences file name cannot be empty");
+        return;
+    }
+    
+    //map file
+    if (optionMap["map"].as<string>() == "") {
+        setOptionError("Map file name cannot be empty");
+        return;
+    }
+    
+    //output file
+    if (optionMap.count("file") && optionMap["file"].as<string>() == "") {
+        setOptionError("Output file name cannot be empty");
+        return;
+    }
+}
+
+void QMeasOptions::setOptionError(string message) {
+    cerr << message << endl;
+    cerr << "For help, run with --help" << endl;
+    cerr << endl;
+    opState = OPS_ERR;
 }

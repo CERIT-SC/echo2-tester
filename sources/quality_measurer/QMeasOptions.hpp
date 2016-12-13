@@ -36,6 +36,10 @@ public:
     Optional<string> getOutputFile();
     
     OptionsState optionsState();
+    
+private:
+    void checkForOptionValidity();
+    void setOptionError(string message);
 };
 
 
