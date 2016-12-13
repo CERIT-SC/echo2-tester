@@ -28,6 +28,8 @@ int main(int argc, const char * argv[]) {
   
     //load options
     DnaGenOptions options(argc, argv);
+    if (options.optionsState() == OPS_HELP) return 0;
+    if (options.optionsState() == OPS_ERR)  return 1;
     
     //set random generator seed
     if (options.getSeed()) srand(*options.getSeed());

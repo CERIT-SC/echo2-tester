@@ -29,15 +29,16 @@ DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
     
     //load options
     try {
-        po::store(po::parse_command_line(argc, argv, optionDescription), options);
+        po::store(po::parse_command_line(argc, argv, optionDescription), optionMap);
     } catch (exception &e) {
-        cerr << "Incorrect input: " << e.what() << endl << endl;
-        exit(1);
+        setOptionError(string("Incorrect input: ") + e.what());
+        return;
     }
-    po::notify(options);
+    po::notify(optionMap);
     
     //print help
-    if (options.count("help")) {
+    if (optionMap.count("help")) {
+        opState = OPS_HELP;
         
         cout << endl;
         cout << "Genome Generator" << endl;
@@ -48,16 +49,15 @@ DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
         cout << "For example: 4, 4k, 7M, 9.4G" << endl;
         cout << endl;
         cout << optionDescription << endl;
-        
-        exit(0);
+        return;
     }
     
     //parse
-    parseLength();
-    parseNum();
+    if (!parseLength())    return;
+    if (!parseNum())       return;
     parseSeed();
-    parseFileName();
-    parseProbabilities();
+    if (!parseFileName())  return;
+    if (!parseProbabilities()) return;
 }
 
 
@@ -66,32 +66,30 @@ unsigned DnaGenOptions::getNum() { return num; }
 Optional<unsigned> DnaGenOptions::getSeed() { return seed; }
 string DnaGenOptions::getFileName() { return fileName; }
 Probabilities DnaGenOptions::getProbabilities() { return prob; }
+OptionsState DnaGenOptions::optionsState() { return opState; }
 
 
 //private
-void DnaGenOptions::parseLength() {
-    if (!options.count("length")) {
-        cerr << "Fragment length must be specified" << endl;
-        cerr << "For help, run with: --help" << endl << endl;
-        exit(1);
-    }
+bool DnaGenOptions::parseLength() {
+    checkForExistence("length", "Fragment length must be specified");
+    if (opState != OPS_OK) return false;
     
     //load length in standard numeric format or with suffix (k,m,g,t,K,M,G,T)
     //i.e. 4, 7k, 9.4M
     //load length
     double length;
     
-    istringstream lengthStream(options["length"].as<string>());
+    istringstream lengthStream(optionMap["length"].as<string>());
     lengthStream >> length;
     
     if(lengthStream.fail()) {
-        cerr << "Fragment length was entered incorrectly" << endl << endl;
-        exit(1);
+        setOptionError("Fragment length was entered incorrectly");
+        return false;
     }
     
     if (length <= 0) {
-        cerr << "Fragment length must have non-zero value" << endl << endl;
-        exit(1);
+        setOptionError("Fragment length must have non-zero value");
+        return false;
     }
     
     //incorporate suffix
@@ -106,71 +104,96 @@ void DnaGenOptions::parseLength() {
         else if(suffix == "g")  length *= 1000000000ull;
         else if(suffix == "t")  length *= 1000000000000ull;
         else {
-            cerr << "Fragment length suffix was entered incorrectly" << endl << endl;
-            exit(1);
+            setOptionError("Fragment length suffix was entered incorrectly");
+            return false;
         }
     }
     
     //whole number test
     if(floor(length) < length) {
-        cerr << "Fragment length must be whole number" << endl << endl;
-        exit(1);
+        setOptionError("Fragment length must be whole number");
+        return false;
     }
     
     this->length = length;
+    return true;
 }
 
-void DnaGenOptions::parseNum() {
-    int fragNum = options["num"].as<int>();
+bool DnaGenOptions::parseNum() {
+    int fragNum = optionMap["num"].as<int>();
     
     if(fragNum < 1) {
-        cerr << "Number of generated fragments must be 1 or higher" << endl << endl;
-        exit(1);
+        setOptionError("Number of generated fragments must be 1 or higher");
+        return false;
     }
     
     num = fragNum;
+    return true;
 }
 
 void DnaGenOptions::parseSeed() {
-    if(options.count("seed")) seed = options["seed"].as<unsigned>();
+    if(optionMap.count("seed")) seed = optionMap["seed"].as<unsigned>();
     else seed = Opt::NoValue;
 }
 
-void DnaGenOptions::parseFileName() {
-    if(options["file"].as<string>() == "") {
-        cerr << "File name cannot be empty" << endl << endl;
-        exit(1);
+bool DnaGenOptions::parseFileName() {
+    if(optionMap["file"].as<string>() == "") {
+        setOptionError("File name cannot be empty");
+        return false;
     }
     
-    fileName = options["file"].as<string>();
+    fileName = optionMap["file"].as<string>();
+    return true;
 }
 
-void DnaGenOptions::parseProbabilities() {
+bool DnaGenOptions::parseProbabilities() {
     prob.A = getParsedProbability("prob-a");
+    if (opState != OPS_OK) return false;
+    
     prob.C = getParsedProbability("prob-c");
+    if (opState != OPS_OK) return false;
+    
     prob.G = getParsedProbability("prob-g");
+    if (opState != OPS_OK) return false;
+    
     prob.T = getParsedProbability("prob-t");
+    if (opState != OPS_OK) return false;
     
     if((prob.A + prob.C + prob.G + prob.T) != 100) {
-        cerr << "Sum of probabilities must be 100" << endl << endl;
-        exit(1);
+        setOptionError("Sum of probabilities must be 100");
+        return false;
     }
+    return true;
 }
 
 unsigned DnaGenOptions::getParsedProbability(const char * optionName) {
     int probability;
     
     try {
-        probability = options[optionName].as<int>();
+        probability = optionMap[optionName].as<int>();
     } catch (exception &e) {
-        cerr << "Probability value entered incorrectly" << endl << endl;
-        exit(1);
+        setOptionError("Probability value entered incorrectly");
+        return 0;
     }
     
     if (probability < 0 || probability > 100) {
-        cerr << "Incorrect probability value" << endl << endl;
-        exit(1);
+        setOptionError("Incorrect probability value");
+        return 0;
     }
     
     return probability;
+}
+
+void DnaGenOptions::checkForExistence(const char * option, const char * errOutput) {
+    if (!optionMap.count(option)) {
+        setOptionError(errOutput);
+        return;
+    }
+}
+
+void DnaGenOptions::setOptionError(string message) {
+    cerr << message << endl;
+    cerr << "For help, run with --help" << endl;
+    cerr << endl;
+    opState = OPS_ERR;
 }
