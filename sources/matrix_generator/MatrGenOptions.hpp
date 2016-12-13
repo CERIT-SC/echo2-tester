@@ -40,7 +40,7 @@ public:
 private:
     void checkOptionValidity();
     void checkForExistence(const char * option, const char * errOutput);
-    void setOptionError(const char * message);
+    void setOptionError(string message);
 };
 
 #endif /* defined(__testing_system__MatrGenOptions__) */

@@ -26,7 +26,6 @@ int main(int argc, const char * argv[]) {
     
     //load options
     SeqGenOptions options(argc, argv);
-    
     if(options.optionsState() == OPS_HELP) return 0;
     if(options.optionsState() == OPS_ERR)  return 1;
     

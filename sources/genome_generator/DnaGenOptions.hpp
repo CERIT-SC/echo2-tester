@@ -27,8 +27,13 @@ struct Probabilities {
     unsigned A, C, G, T;
 };
 
+enum OptionsState {
+    OPS_OK, OPS_HELP, OPS_ERR
+};
+
 class DnaGenOptions {
-    po::variables_map options;
+    OptionsState opState = OPS_OK;
+    po::variables_map optionMap;
     
     ULL length;
     unsigned num;
@@ -45,13 +50,18 @@ public:
     string    getFileName();
     Probabilities getProbabilities();
     
+    OptionsState optionsState();
+    
 private:
-    void parseLength();
-    void parseNum();
+    bool parseLength();
+    bool parseNum();
     void parseSeed();
-    void parseFileName();
-    void parseProbabilities();
+    bool parseFileName();
+    bool parseProbabilities();
     unsigned getParsedProbability(const char * optionName);
+    
+    void checkForExistence(const char * option, const char * errOutput);
+    void setOptionError(string message);
 };
 
 //possible improvement - instead of using exit directly, options can

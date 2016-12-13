@@ -42,8 +42,7 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     try {
         po::store(po::parse_command_line(argc, argv, allOptions), optionMap);
     } catch (exception &e) {
-        opState = OPS_ERR;
-        cerr << "Incorrect input: " << e.what() << endl << endl;
+        setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
     
@@ -169,7 +168,7 @@ void SeqGenOptions::checkForExistence(const char * option, const char * errOutpu
     }
 }
 
-void SeqGenOptions::setOptionError(const char * message) {
+void SeqGenOptions::setOptionError(string message) {
     cerr << message << endl;
     cerr << "For help, run with --help" << endl;
     cerr << endl;
