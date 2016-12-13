@@ -74,11 +74,11 @@ int main(int argc, const char * argv[]) {
 N44Matrix getMatrix(SeqGenOptions& options) {
     N44Matrix probMatrix;
     
-    if (options.isProbabilityUniform()) {
-        probMatrix = generateProbMatrix(options.getUniformProbability(), options.getSeqLength());
+    if (options.uniformProbability()) {     //returned as Optional
+        probMatrix = generateProbMatrix(*options.uniformProbability(), options.getSeqLength());
         
     } else {
-        ProbMatrixLoader loader(options.getProbabilityFileName(), options.getSeqLength());
+        ProbMatrixLoader loader(*options.probabilityFileName(), options.getSeqLength());
         if (!loader.loadedCorrectly()) {
             cerr << "Probability matrix has not been loaded correctly." << endl << endl;
             exit(1);

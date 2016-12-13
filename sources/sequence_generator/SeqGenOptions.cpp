@@ -93,17 +93,18 @@ Optional<unsigned> SeqGenOptions::randGenSeed() {
     else return Opt::NoValue;
 }
 
-
-bool SeqGenOptions::isProbabilityUniform() {
-    return optionMap.count("prob-uniform");
+Optional<unsigned> SeqGenOptions::uniformProbability() {
+    if (optionMap.count("prob-uniform")) {
+        return optionMap["prob-uniform"].as<int>();
+    }
+    return Opt::NoValue;
 }
 
-unsigned SeqGenOptions::getUniformProbability() {
-    return optionMap["prob-uniform"].as<int>();
-}
-
-string SeqGenOptions::getProbabilityFileName() {
-    return optionMap["prob-file"].as<string>();
+Optional<string> SeqGenOptions::probabilityFileName() {
+    if (optionMap.count("prob-file")) {
+        return optionMap["prob-file"].as<string>();
+    }
+    return Opt::NoValue;
 }
 
 

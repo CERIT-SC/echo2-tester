@@ -40,9 +40,8 @@ public:
     Optional<unsigned> randGenSeed();
     
     //only one way to retrieve probability is valid in given run
-    bool        isProbabilityUniform();
-    unsigned    getUniformProbability();
-    string      getProbabilityFileName();
+    Optional<unsigned> uniformProbability();
+    Optional<string>   probabilityFileName();
     
     OptionsState optionsState();
     
