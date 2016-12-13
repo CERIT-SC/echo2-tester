@@ -30,8 +30,7 @@ MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
     try {
         po::store(po::parse_command_line(argc, argv, options), optionMap);
     } catch (exception &e) {
-        opState = OPS_ERR;
-        cerr << "Incorrect input: " << e.what() << endl << endl;
+        setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
     
@@ -107,7 +106,7 @@ void MatrGenOptions::checkForExistence(const char * option, const char * errOutp
     }
 }
 
-void MatrGenOptions::setOptionError(const char * message) {
+void MatrGenOptions::setOptionError(string message) {
     cerr << message << endl;
     cerr << "For help, run with --help" << endl;
     cerr << endl;
