@@ -12,11 +12,13 @@
 #include "SeqGenOptions.hpp"
 #include "ProbMatrixLoader.hpp"
 #include "../global/N44Matrix.hpp"
+#include "../global/Fasta.hpp"
 using namespace std;
 
 
 N44Matrix getMatrix(SeqGenOptions& options);
 N44Matrix generateUniformProb(float uniformProbability, unsigned matrixLength);
+void loadGenome(Fasta& genome, SeqGenOptions& options);
 
 
 
@@ -29,9 +31,13 @@ int main(int argc, const char * argv[]) {
     
     //load input data
     N44Matrix probMatrix = getMatrix(options);
+    Fasta genome;
+    loadGenome(genome, options);
     
     
-    
+    //algoritmus generování sequencí musí počítat s tím
+    //že fragment může být kratší než sekvence (i délky 0)
+    //v té chvíli by měl algoritmus daný fragment ignorovat
     
 }
 
@@ -53,6 +59,22 @@ N44Matrix getMatrix(SeqGenOptions& options) {
     }
     
     return probMatrix;
+}
+
+void loadGenome(Fasta& genome, SeqGenOptions& options) {
+    try {
+        genome.loadFromFile(options.getGenomeFileName());
+    } catch (...) {
+        cout << "Could not load genome file" << endl;
+        cout << endl;
+        exit(1);
+    }
+    
+    if (genome.getFragmentCount() == 0) {
+        cout << "No genome data loaded" << endl;
+        cout << endl;
+        exit(1);
+    }
 }
 
 N44Matrix generateUniformProb(float uniformProbability, unsigned matrixLength) {
