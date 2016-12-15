@@ -14,10 +14,9 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     requiredOptions.add_options()
     ("genome,g", po::value<string>()->default_value("genome.fa"),
      "Specifies genome file")
-    ("seq-num,n", po::value<long long>(), "Number of sequences generated")
+    ("coverage,c", po::value<float>(), "Sequence to genome coverage")
     ("seq-len,l", po::value<int>(), "Sequence length");
     
-    //definovat další objekt description pro pravděpodobnost (vždy jen jedna je povolena)
     po::options_description probabilityOptions("Probability specification (exactly one is required)");
     probabilityOptions.add_options()
     ("prob-uniform,u", po::value<int>(), "Uniform error probability (in %)")
@@ -53,10 +52,12 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
         cout << endl;
         cout << "Sequence Generator" << endl;
         cout << "This tool randomly generates seuences from genome file (-g)." << endl;
-        cout << "Genome must be in fasta format. There will be -n sequences" << endl;
-        cout << "generated of length -l. Tool introduces errors to sequences" << endl;
-        cout << "using pseudo-random generator. How errors should be introduced" << endl;
-        cout << "must be specified either using -u or -f." << endl;
+        cout << "Genome must be in fasta format. Amount of sequences generated" << endl;
+        cout << "is specified by coverage (-c). I.e. coverage 2.5 means, that there" << endl;
+        cout << "are enough sequences to cover the genome two and a half times." << endl;
+        cout << "Sequences have length -l." << endl;
+        cout << "Tool introduces errors to sequences using pseudo-random generator." << endl;
+        cout << "How errors should be introduced must be specified either using -u or -f." << endl;
         cout << "There are 2 files as a result: sequences with errors in fastq" << endl;
         cout << "format and mapping file that maps sequences to their original" << endl;
         cout << "positions in genome." << endl;
@@ -72,8 +73,8 @@ string SeqGenOptions::getGenomeFilePath() {
     return optionMap["genome"].as<string>();
 }
 
-ULL SeqGenOptions::getSeqNum() {
-    return optionMap["seq-num"].as<long long>();
+float SeqGenOptions::getCoverage() {
+    return optionMap["coverage"].as<float>();
 }
 
 unsigned SeqGenOptions::getSeqLength() {
@@ -120,7 +121,7 @@ void SeqGenOptions::checkOptionValidity() {
     checkForExistence("genome", "Genome file must be specified");
     if(opState != OPS_OK) return;
     
-    checkForExistence("seq-num", "Number of sequences must be specified");
+    checkForExistence("coverage", "Coverage must be specified");
     if(opState != OPS_OK) return;
     
     checkForExistence("seq-len", "Sequence length must be specified");
@@ -136,8 +137,8 @@ void SeqGenOptions::checkOptionValidity() {
     try {
         //file path is not checked
         
-        if (optionMap["seq-num"].as<long long>() < 0) {
-            setOptionError("Number of sequences must be non-negative");
+        if (optionMap["coverage"].as<float>() < 0) {
+            setOptionError("Coverage must be non-negative");
             return;
         }
         

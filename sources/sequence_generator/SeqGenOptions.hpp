@@ -33,7 +33,7 @@ public:
     SeqGenOptions(int argc, const char * argv[]);
     
     string      getGenomeFilePath();
-    ULL         getSeqNum();
+    float       getCoverage();
     unsigned    getSeqLength();
     string      getOutputSequenceFileName();
     string      getOutputMapFileName();
