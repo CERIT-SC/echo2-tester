@@ -32,7 +32,7 @@ class SeqGenOptions {
 public:
     SeqGenOptions(int argc, const char * argv[]);
     
-    string      getGenomeFilePath();
+    string      getGenomeFileName();
     float       getCoverage();
     unsigned    getSeqLength();
     string      getOutputSequenceFileName();

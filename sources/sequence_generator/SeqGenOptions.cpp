@@ -69,7 +69,7 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     checkOptionValidity();
 }
 
-string SeqGenOptions::getGenomeFilePath() {
+string SeqGenOptions::getGenomeFileName() {
     return optionMap["genome"].as<string>();
 }
 
@@ -118,9 +118,6 @@ OptionsState SeqGenOptions::optionsState() {
 void SeqGenOptions::checkOptionValidity() {
 
     //check if everything is specified
-    checkForExistence("genome", "Genome file must be specified");
-    if(opState != OPS_OK) return;
-    
     checkForExistence("coverage", "Coverage must be specified");
     if(opState != OPS_OK) return;
     
@@ -134,8 +131,10 @@ void SeqGenOptions::checkOptionValidity() {
     }
     
     //check values
-
-    //file path is not checked
+    if (optionMap["genome"].as<string>() == "") {
+        setOptionError("Genome file name cannot be empty");
+        return;
+    }
         
     if (optionMap["coverage"].as<float>() < 0) {
         setOptionError("Coverage must be non-negative");
@@ -147,12 +146,29 @@ void SeqGenOptions::checkOptionValidity() {
         return;
     }
     
+    if (optionMap["seq-file"].as<string>() == "") {
+        setOptionError("Sequence file name cannot be empty");
+        return;
+    }
+    
+    if (optionMap["map-file"].as<string>() == "") {
+        setOptionError("Map file name cannot be empty");
+        return;
+    }
+    
     if (optionMap.count("prob-uniform")) {
         float value = optionMap["prob-uniform"].as<float>();
         if (value < 0.0 || value > 100.0) {
             setOptionError("Uniform error probability has incorrect value");
             return;
         }
+    }
+    
+    if (optionMap.count("prob-file") &&
+        optionMap["prob-file"].as<string>() == "") {
+        
+        setOptionError("Probability file name cannot be empty");
+        return;
     }
 }
 
