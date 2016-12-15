@@ -19,7 +19,7 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     
     po::options_description probabilityOptions("Probability specification (exactly one is required)");
     probabilityOptions.add_options()
-    ("prob-uniform,u", po::value<int>(), "Uniform error probability (in %)")
+    ("prob-uniform,u", po::value<float>(), "Uniform error probability (in %, can be decimal)")
     ("prob-file,f", po::value<string>(),
      "File with 4x4xN probability matrix with probabilities for every base in sequence.\n"
      "    \tThere must be at least one 4x4 matrix specified in a file. Last 4x4 matrix from "
@@ -94,9 +94,9 @@ Optional<unsigned> SeqGenOptions::randGenSeed() {
     else return Opt::NoValue;
 }
 
-Optional<unsigned> SeqGenOptions::uniformProbability() {
+Optional<float> SeqGenOptions::uniformProbability() {
     if (optionMap.count("prob-uniform")) {
-        return optionMap["prob-uniform"].as<int>();
+        return optionMap["prob-uniform"].as<float>();
     }
     return Opt::NoValue;
 }
@@ -134,30 +134,25 @@ void SeqGenOptions::checkOptionValidity() {
     }
     
     //check values
-    try {
-        //file path is not checked
+
+    //file path is not checked
         
-        if (optionMap["coverage"].as<float>() < 0) {
-            setOptionError("Coverage must be non-negative");
+    if (optionMap["coverage"].as<float>() < 0) {
+        setOptionError("Coverage must be non-negative");
+        return;
+    }
+        
+    if (optionMap["seq-len"].as<int>() < 0) {
+        setOptionError("Sequence length must be non-negative");
+        return;
+    }
+    
+    if (optionMap.count("prob-uniform")) {
+        float value = optionMap["prob-uniform"].as<float>();
+        if (value < 0.0 || value > 100.0) {
+            setOptionError("Uniform error probability has incorrect value");
             return;
         }
-        
-        if (optionMap["seq-len"].as<int>() < 0) {
-            setOptionError("Sequence length must be non-negative");
-            return;
-        }
-        
-        
-        if (optionMap.count("prob-uniform")) {
-            int value = optionMap["prob-uniform"].as<int>();
-            if (value < 0 || value > 100) {
-                setOptionError("Uniform error probability has incorrect value");
-                return;
-            }
-        }
-        
-    } catch (exception &e) {
-        setOptionError((string("Incorrect value: ") + e.what()).c_str());
     }
 }
 
