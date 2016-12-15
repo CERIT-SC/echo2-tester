@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include "SeqGenOptions.hpp"
+#include "ProbMatrixLoader.hpp"
 #include "../global/N44Matrix.hpp"
 using namespace std;
 
@@ -43,12 +44,12 @@ N44Matrix getMatrix(SeqGenOptions& options) {
         probMatrix = generateUniformProb(*options.uniformProbability(), options.getSeqLength());
         
     } else {
-        //ProbMatrixLoader loader(*options.probabilityFileName(), options.getSeqLength());
-        //if (!loader.loadedCorrectly()) {
-          //  cerr << "Probability matrix has not been loaded correctly." << endl << endl;
-            //exit(1);
-        //}
-        //probMatrix = loader.getMatrix();
+        ProbMatrixLoader loader(*options.probabilityFileName(), options.getSeqLength());
+        if (!loader.loadedCorrectly()) {
+            cerr << "Probability matrix has not been loaded correctly." << endl << endl;
+            exit(1);
+        }
+        probMatrix = loader.getMatrix();
     }
     
     return probMatrix;

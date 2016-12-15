@@ -23,6 +23,7 @@
 		DC0461F41DF87E3B0051C37E /* N44Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC0461DF1DF6ED200051C37E /* N44Matrix.cpp */; };
 		DC14042C1E02F31D002F9125 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC14042B1E02F31D002F9125 /* main.cpp */; };
 		DC1404421E02F440002F9125 /* SeqGenOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404401E02F440002F9125 /* SeqGenOptions.cpp */; };
+		DC1404451E0308B6002F9125 /* ProbMatrixLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404431E0308B6002F9125 /* ProbMatrixLoader.cpp */; };
 		DCF180091DFE224800818057 /* DnaGenOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCF180081DFE224800818057 /* DnaGenOptions.cpp */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,8 @@
 		DC14042B1E02F31D002F9125 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DC1404401E02F440002F9125 /* SeqGenOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SeqGenOptions.cpp; sourceTree = "<group>"; };
 		DC1404411E02F440002F9125 /* SeqGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SeqGenOptions.hpp; sourceTree = "<group>"; };
+		DC1404431E0308B6002F9125 /* ProbMatrixLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProbMatrixLoader.cpp; sourceTree = "<group>"; };
+		DC1404441E0308B6002F9125 /* ProbMatrixLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProbMatrixLoader.hpp; sourceTree = "<group>"; };
 		DCF180071DFE21E500818057 /* DnaGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DnaGenOptions.hpp; sourceTree = "<group>"; };
 		DCF180081DFE224800818057 /* DnaGenOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DnaGenOptions.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +199,8 @@
 				DC14042B1E02F31D002F9125 /* main.cpp */,
 				DC1404411E02F440002F9125 /* SeqGenOptions.hpp */,
 				DC1404401E02F440002F9125 /* SeqGenOptions.cpp */,
+				DC1404441E0308B6002F9125 /* ProbMatrixLoader.hpp */,
+				DC1404431E0308B6002F9125 /* ProbMatrixLoader.cpp */,
 			);
 			name = sequence_generator;
 			path = ../sources/sequence_generator;
@@ -403,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC1404451E0308B6002F9125 /* ProbMatrixLoader.cpp in Sources */,
 				DC1404421E02F440002F9125 /* SeqGenOptions.cpp in Sources */,
 				DC14042C1E02F31D002F9125 /* main.cpp in Sources */,
 				DC0461E41DF6ED200051C37E /* N44Matrix.cpp in Sources */,
