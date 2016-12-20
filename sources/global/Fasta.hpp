@@ -14,6 +14,8 @@
 #include <stdexcept>
 #include <fstream>
 #include <cctype>
+#include <algorithm>
+#include <boost/algorithm/string/trim.hpp>
 using namespace std;
 typedef unsigned long long ULL;
 

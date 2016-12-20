@@ -34,6 +34,10 @@ int main(int argc, const char * argv[]) {
     Fasta genome;
     loadGenome(genome, options);
     
+    //create output files
+    
+    //setup random generator seed
+    
     
     //algoritmus generování sequencí musí počítat s tím
     //že fragment může být kratší než sekvence (i délky 0)
