@@ -35,8 +35,23 @@ int main(int argc, const char * argv[]) {
     loadGenome(genome, options);
     
     //create output files
+    ofstream outputSeqFile(options.getOutputSequenceFileName());
+    ofstream outputMapFile(options.getOutputMapFileName());
+    
+    if (!outputSeqFile.is_open()) {
+        cerr << "Cannot open output sequence file" << endl << endl;
+        exit(1);
+    }
+    
+    if (!outputMapFile.is_open()) {
+        cerr << "Cannot open output map file" << endl << endl;
+        exit(1);
+    }
     
     //setup random generator seed
+    unsigned randGenSeed;
+    if (options.randGenSeed()) randGenSeed = *options.randGenSeed();
+    else randGenSeed = static_cast<unsigned>(time(nullptr));
     
     
     //algoritmus generování sequencí musí počítat s tím
