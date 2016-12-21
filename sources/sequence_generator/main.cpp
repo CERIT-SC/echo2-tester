@@ -12,6 +12,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <cctype>
 
 #include "SeqGenOptions.hpp"
 #include "ProbMatrixLoader.hpp"
@@ -80,6 +81,7 @@ int main(int argc, const char * argv[]) {
     //introduce errors
     cout << "Introducing errors" << endl;
     generateErrors(sequences, probMatrix, randGenerator);
+   
     
     //shuffle sequences
     cout << "Shuffling" << endl;
@@ -138,14 +140,14 @@ void loadGenome(Fasta& genome, SeqGenOptions& options) {
     try {
         genome.loadFromFile(options.getGenomeFileName());
     } catch (...) {
-        cout << "Could not load genome file" << endl;
-        cout << endl;
+        cerr << "Could not load genome file" << endl;
+        cerr << endl;
         exit(1);
     }
     
     if (genome.getFragmentCount() == 0) {
-        cout << "No genome data loaded" << endl;
-        cout << endl;
+        cerr << "No genome data loaded" << endl;
+        cerr << endl;
         exit(1);
     }
 }
@@ -218,8 +220,12 @@ void generateErrors(vector<Sequence>& sequences,
                 case 'C': case 'c': row = 1; break;
                 case 'G': case 'g': row = 2; break;
                 case 'T': case 't': row = 3; break;
-                    
-                default: throw logic_error("bad_base"); break;
+                default: {
+                    cerr << "Corrupted input data" << endl;
+                    cerr << "Aborting generation" << endl;
+                    cerr << endl;
+                    exit(1);
+                }
             }
             
             //get probabilities as whole numbers
@@ -228,14 +234,15 @@ void generateErrors(vector<Sequence>& sequences,
             unsigned probG = probMatrix(seqPos, row, 2) * 10000;
             unsigned probT = probMatrix(seqPos, row, 3) * 10000;
             
-            unsigned fulProbabilityNum = probA + probC + probG + probT;
-            unsigned randNumber = randGen() % fulProbabilityNum;
+            unsigned fullProbabilityNum = probA + probC + probG + probT;
+            unsigned randNumber = randGen() % fullProbabilityNum;
+            bool upper = isupper(base);
             
             //put errors in sequence
-            if (randNumber <= END_A) base = 'A';
-            if (randNumber > END_A && randNumber <= END_C) base = 'C';
-            if (randNumber > END_C && randNumber <= END_G) base = 'G';
-            if (randNumber > END_G)  base = 'T';
+            if (randNumber <= END_A) base = upper ? 'A': 'a';
+            if (randNumber > END_A && randNumber <= END_C) base = upper ? 'C': 'c';
+            if (randNumber > END_C && randNumber <= END_G) base = upper ? 'G': 'g';
+            if (randNumber > END_G) base = upper ? 'T': 't';
         }
     }
 }
