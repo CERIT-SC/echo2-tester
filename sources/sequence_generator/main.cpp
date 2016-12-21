@@ -19,6 +19,7 @@ using namespace std;
 N44Matrix getMatrix(SeqGenOptions& options);
 N44Matrix generateUniformProb(float uniformProbability, unsigned matrixLength);
 void loadGenome(Fasta& genome, SeqGenOptions& options);
+void testOutputFiles(ofstream& seqFile, ofstream& mapFile);
 
 
 
@@ -37,21 +38,20 @@ int main(int argc, const char * argv[]) {
     //create output files
     ofstream outputSeqFile(options.getOutputSequenceFileName());
     ofstream outputMapFile(options.getOutputMapFileName());
-    
-    if (!outputSeqFile.is_open()) {
-        cerr << "Cannot open output sequence file" << endl << endl;
-        exit(1);
-    }
-    
-    if (!outputMapFile.is_open()) {
-        cerr << "Cannot open output map file" << endl << endl;
-        exit(1);
-    }
+    testOutputFiles(outputSeqFile, outputMapFile);
     
     //setup random generator seed
     unsigned randGenSeed;
     if (options.randGenSeed()) randGenSeed = *options.randGenSeed();
     else randGenSeed = static_cast<unsigned>(time(nullptr));
+    
+    //generate sequences
+    
+    //introduce errors
+    
+    //shuffle sequences
+    
+    //safe to files
     
     
     //algoritmus generování sequencí musí počítat s tím
@@ -80,22 +80,6 @@ N44Matrix getMatrix(SeqGenOptions& options) {
     return probMatrix;
 }
 
-void loadGenome(Fasta& genome, SeqGenOptions& options) {
-    try {
-        genome.loadFromFile(options.getGenomeFileName());
-    } catch (...) {
-        cout << "Could not load genome file" << endl;
-        cout << endl;
-        exit(1);
-    }
-    
-    if (genome.getFragmentCount() == 0) {
-        cout << "No genome data loaded" << endl;
-        cout << endl;
-        exit(1);
-    }
-}
-
 N44Matrix generateUniformProb(float uniformProbability, unsigned matrixLength) {
     N44Matrix probMatrix(matrixLength);
     
@@ -113,4 +97,32 @@ N44Matrix generateUniformProb(float uniformProbability, unsigned matrixLength) {
     }
     
     return probMatrix;
+}
+
+void loadGenome(Fasta& genome, SeqGenOptions& options) {
+    try {
+        genome.loadFromFile(options.getGenomeFileName());
+    } catch (...) {
+        cout << "Could not load genome file" << endl;
+        cout << endl;
+        exit(1);
+    }
+    
+    if (genome.getFragmentCount() == 0) {
+        cout << "No genome data loaded" << endl;
+        cout << endl;
+        exit(1);
+    }
+}
+
+void testOutputFiles(ofstream& seqFile, ofstream& mapFile) {
+    if (!seqFile.is_open()) {
+        cerr << "Cannot open output sequence file" << endl << endl;
+        exit(1);
+    }
+    
+    if (!mapFile.is_open()) {
+        cerr << "Cannot open output map file" << endl << endl;
+        exit(1);
+    }
 }
