@@ -32,16 +32,16 @@ class SeqGenOptions {
 public:
     SeqGenOptions(int argc, const char * argv[]);
     
-    string      getGenomeFilePath();
-    ULL         getSeqNum();
+    string      getGenomeFileName();
+    float       getCoverage();
     unsigned    getSeqLength();
     string      getOutputSequenceFileName();
     string      getOutputMapFileName();
     Optional<unsigned> randGenSeed();
     
     //only one way to retrieve probability is valid in given run
-    Optional<unsigned> uniformProbability();
-    Optional<string>   probabilityFileName();
+    Optional<float>  uniformProbability();
+    Optional<string> probabilityFileName();
     
     OptionsState optionsState();
     
