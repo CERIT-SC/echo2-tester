@@ -19,6 +19,7 @@
 using namespace std;
 
 Fasta loadGenome(string genomeFileName);
+void  checkFiles(ifstream& corruptedSeqFile, ifstream& correctedSeqFile, ifstream& mapFile);
 string getStatistics(MeasuredData data);
 
 int main(int argc, const char * argv[]) {
@@ -33,21 +34,9 @@ int main(int argc, const char * argv[]) {
     ifstream corruptedSeqFile(options.getCorruptedSeqFName());
     ifstream correctedSeqFile(options.getCorrectedSeqFName());
     ifstream mapFile(options.getSeqMapFName());
+    checkFiles(corruptedSeqFile, correctedSeqFile, mapFile);
     
-    if (!corruptedSeqFile.is_open()) {
-        cerr << "Cannot open file with corrupted sequences" << endl << endl;
-        exit(1);
-    }
     
-    if (!correctedSeqFile.is_open()) {
-        cerr << "Cannot open file with corrected sequences" << endl << endl;
-        exit(1);
-    }
-    
-    if (!mapFile.is_open()) {
-        cerr << "Cannot open mapping file" << endl << endl;
-        exit(1);
-    }
     
     ostringstream resultStream;
     resultStream << "Genome length: " << genome.size() << endl;
@@ -111,6 +100,29 @@ Fasta loadGenome(string genomeFileName) {
     }
     
     return genome;
+}
+
+void  checkFiles(ifstream& corruptedSeqFile, ifstream& correctedSeqFile, ifstream& mapFile) {
+    if (!corruptedSeqFile.is_open()) {
+        cerr << "Cannot open file with corrupted sequences" << endl;
+        cerr << "For help, run with --help" << endl;
+        cerr << endl;
+        exit(1);
+    }
+    
+    if (!correctedSeqFile.is_open()) {
+        cerr << "Cannot open file with corrected sequences" << endl;
+        cerr << "For help, run with --help" << endl;
+        cerr << endl;
+        exit(1);
+    }
+    
+    if (!mapFile.is_open()) {
+        cerr << "Cannot open mapping file" << endl;
+        cerr << "For help, run with --help" << endl;
+        cerr << endl;
+        exit(1);
+    }
 }
 
 string getStatistics(MeasuredData data) {
