@@ -12,13 +12,14 @@
 #include <string>
 #include <fstream>
 #include <limits>
-#include <algorithm>
 #include <stdexcept>
-#include <cctype>
+#include <utility>
+#include <array>
+
 using namespace std;
 typedef unsigned long long ULL;
 
 string loadNextSeq(ifstream& inputFile);
-ULL loadNextSeqPos(ifstream& mapFile);
+pair<unsigned, ULL> loadNextMapEntry(ifstream& mapFile);
 
 #endif

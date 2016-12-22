@@ -23,7 +23,7 @@ string loadNextSeq(ifstream& inputFile) {
     
     //line 3
     char ch = inputFile.get();
-    if (ch != '+') throw runtime_error("incorrect_fastq_signature");
+    if (ch != '+') throw runtime_error("incorrect-fastq-signature");
     inputFile.ignore(unlimited, '\n');
     
     //line 4
@@ -31,12 +31,13 @@ string loadNextSeq(ifstream& inputFile) {
     
     
     //check sequence correctness
-    transform(seq.begin(), seq.end(), seq.begin(), ::toupper);
-    for_each(seq.begin(), seq.end(), [](char c){
-        if (c != 'A' && c != 'C' && c != 'G' && c != 'T') {
-            throw runtime_error("seq_bad_data");
+    array<char, 8> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't'};
+    
+    for (char ch: seq) {
+        if (count(alowedChar.begin(), alowedChar.end(), ch) == 0) {
+            throw runtime_error("seq-bad-data");
         }
-    });
+    }
     
     return seq;
     
@@ -45,12 +46,12 @@ string loadNextSeq(ifstream& inputFile) {
     //shouldn't be a problem: number of loaded sequences should be seen in program output
 }
 
-ULL loadNextSeqPos(ifstream& mapFile) {
-    if (!mapFile.good()) throw runtime_error("file_not_good");
-    
+pair<unsigned, ULL> loadNextMapEntry(ifstream& mapFile) {
+    unsigned fragment;
     ULL position;
-    mapFile >> position;
-    if (mapFile.fail()) throw runtime_error("file_bad");
+    mapFile >> fragment >> position;
     
-    return position;
+    if (mapFile.fail()) throw runtime_error("file-bad");
+    
+    return make_pair(fragment, position);
 }
