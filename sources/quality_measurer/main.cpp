@@ -10,13 +10,15 @@
 #include <exception>
 #include <sstream>
 #include <iomanip>
+#include <array>
 
 #include "QMeasOptions.hpp"
 #include "Measuring.hpp"
 #include "../global/Optional.hpp"
+#include "../global/Fasta.hpp"
 using namespace std;
 
-string loadGenome(string genomeFileName);
+Fasta loadGenome(string genomeFileName);
 string getStatistics(MeasuredData data);
 
 int main(int argc, const char * argv[]) {
@@ -27,7 +29,7 @@ int main(int argc, const char * argv[]) {
     if(options.optionsState() == OPS_ERR)  return 1;
     
     //opening/loading input files
-    string genome = loadGenome(options.getGenomeFName());
+    Fasta genome = loadGenome(options.getGenomeFName());
     ifstream corruptedSeqFile(options.getCorruptedSeqFName());
     ifstream correctedSeqFile(options.getCorrectedSeqFName());
     ifstream mapFile(options.getSeqMapFName());
@@ -68,36 +70,45 @@ int main(int argc, const char * argv[]) {
         cout << resultStream.str();
     }
     
+    cout << "Done" << endl;
+    
     return 0;
 }
 
-string loadGenome(string genomeFileName) {
-    ifstream genomeFile(genomeFileName);
-    string genome;
-    
-    if (!genomeFile.is_open()) {
-        cerr << "Cannot open genome file" << endl;
-        cerr << "For help, run with --help" << endl;
-        cerr << endl;
-        exit(1);
-    }
-    
-    genomeFile >> genome;
-    
-    if (genomeFile.fail()) {
-        cerr << "Cannot load genome from file" << endl << endl;
-        exit(1);
-    }
-    
-    transform(genome.begin(), genome.end(), genome.begin(), ::toupper);
-    
-    //check if genome has only A C G T characters
-    for_each(genome.begin(), genome.end(), [&](char& c){
-        if (c != 'A' && c != 'C' && c != 'G' && c != 'T') {
-            cerr << "Bad data in genome file" << endl << endl;
+Fasta loadGenome(string genomeFileName) {
+    Fasta genome;
+    try {
+        genome.loadFromFile(genomeFileName);
+        
+    } catch (FastaException& e) {
+        if (string(e.what()) == string("cannot-open-file")) {
+            cerr << "Cannot open genome file" << endl;
+            cerr << "For help, run with --help" << endl;
+            cerr << endl;
+            exit(1);
+        } else {
+            cerr << "Problem with reading genome data" << endl;
+            cerr << "For help, run with --help" << endl;
+            cerr << endl;
             exit(1);
         }
-    });
+    }
+    
+    //check if genome has only A C G T characters
+    array<char, 8> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't'};
+    
+    for (ULL fragIndex = 0; fragIndex < genome.getFragmentCount(); fragIndex++) {
+        string& fragment = genome.getData(fragIndex);
+        
+        for (char ch: fragment) {
+            if (count(alowedChar.begin(), alowedChar.end(), ch) == 0) {
+                cerr << "Bad data in genome file" << endl;
+                cerr << "For help, run with --help" << endl;
+                cerr << endl;
+                exit(1);
+            }
+        }
+    }
     
     return genome;
 }
