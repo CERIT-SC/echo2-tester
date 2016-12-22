@@ -19,7 +19,7 @@
 using namespace std;
 typedef unsigned long long ULL;
 
-string loadNextSeq(ifstream& inputFile);
+string loadNextSeq(ifstream& inputFile); //returns "" when end of file occurs
 pair<unsigned, ULL> loadNextMapEntry(ifstream& mapFile);
 
 #endif
