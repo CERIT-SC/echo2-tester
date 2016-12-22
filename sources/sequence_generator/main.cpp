@@ -13,6 +13,7 @@
 #include <cmath>
 #include <algorithm>
 #include <cctype>
+#include <cassert>
 
 #include "SeqGenOptions.hpp"
 #include "ProbMatrixLoader.hpp"
@@ -189,6 +190,7 @@ vector<Sequence> generateSequences(Fasta& genome,
             seq.sequence = fragment.substr(position, seqLength);
             seq.fragmentIndex = fragIndex;
             seq.position = position;
+            assert(seq.sequence.length() == seqLength);
             
             sequences.push_back(seq);
         }
