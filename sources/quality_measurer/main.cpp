@@ -39,7 +39,7 @@ int main(int argc, const char * argv[]) {
     
     
     ostringstream resultStream;
-    resultStream << "Genome length: " << genome.size() << endl;
+    resultStream << "Genome fragment count: " << genome.getFragmentCount() << endl;
     
     MeasuredData data = measure(genome, corruptedSeqFile, correctedSeqFile, mapFile);
     
