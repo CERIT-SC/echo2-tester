@@ -1,53 +1,43 @@
 //
-//  Measuring.h
-//  testing system
+//  Measuring.hpp
+//  Corrector Tester
 //
-//  Created by Miloš Šimek on 30.04.15.
-//  Copyright (c) 2015 Miloš Šimek. All rights reserved.
+//  Created by Miloš Šimek on 22/12/2016.
+//
 //
 
-#ifndef __testing_system__Measuring__
-#define __testing_system__Measuring__
+#ifndef Measuring_hpp
+#define Measuring_hpp
 
-#include <string>
-#include <fstream>
 #include <iostream>
+#include <string>
+#include <stdexcept>
 #include <tuple>
-#include <cassert>
+#include <utility>
 
 #include "FileLoaders.hpp"
+#include "../global/Fasta.hpp"
 using namespace std;
 typedef unsigned long long ULL;
 
 enum BaseState {
-    BS_TP,	// true positive
-    BS_FP,	// false positive
-    BS_TN,	// true negative
-    BS_FN,	// false negative
-
-    BS_MAX
+    BS_TruePositive  = 0,
+    BS_FalsePositive = 1,
+    BS_TrueNegative  = 2,
+    BS_FalseNegative = 3,
 };
 
 struct MeasuredData {
-    ULL counter[BS_MAX] = {0,0,0,0};
+    ULL counter[4] = {0,0,0,0};
     ULL originalErrors = 0;
     ULL unalteredSeqCount = 0;
     ULL seqCount = 0;
 };
 
-MeasuredData measure(string& genome,
-             ifstream& corruptedSeqFile, ifstream& correctedSeqFile,
-             ifstream& mapFile);
+MeasuredData measure(ifstream& corruptedSeqFile,
+                     ifstream& correctedSeqFile,
+                     ifstream& mapFile,
+                     Fasta& genome);
 
-unsigned countDifferences(string& first, string& second);
-void countStates(string& genomeSeq, string& corruptedSeq, string& correctedSeq,
-                 MeasuredData& measured);
-bool isUnaltered(string& genomeSeq, string& corruptedSeq, string& correctedSeq);
 
-BaseState getState(char genBase, char corruptedBase, char correctedBase);
-tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
-                                            ifstream& correctedSeqFile,
-                                            ifstream& mapFile,
-                                            string& genome);
-
-#endif /* defined(__testing_system__Measuring__) */
+#endif /* Measuring_hpp */

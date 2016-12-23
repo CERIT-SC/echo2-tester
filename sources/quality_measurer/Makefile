@@ -1,6 +1,6 @@
 include ../Makefile.inc
 
-SRC=FileLoaders.cpp main.cpp Measuring.cpp QMeasOptions.cpp
+SRC= main.cpp FileLoaders.cpp Measuring.cpp QMeasOptions.cpp Fasta.cpp
 OBJ=${SRC:.cpp=.o}
 
 CPPFLAGS=-I../global

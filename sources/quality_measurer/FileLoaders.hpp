@@ -12,13 +12,18 @@
 #include <string>
 #include <fstream>
 #include <limits>
-#include <algorithm>
 #include <stdexcept>
-#include <cctype>
+#include <utility>
+
+#include "Setup.hpp"
+
 using namespace std;
 typedef unsigned long long ULL;
 
+//returns empty string when end of file occurs
 string loadNextSeq(ifstream& inputFile);
-ULL loadNextSeqPos(ifstream& mapFile);
+
+//pair - fragment, position
+pair<unsigned, ULL> loadNextMapEntry(ifstream& mapFile);
 
 #endif

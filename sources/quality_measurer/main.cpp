@@ -14,10 +14,15 @@
 #include "QMeasOptions.hpp"
 #include "Measuring.hpp"
 #include "../global/Optional.hpp"
+#include "../global/Fasta.hpp"
+#include "Setup.hpp"
 using namespace std;
 
-string loadGenome(string genomeFileName);
+//function declarations
+Fasta loadGenome(string genomeFileName);
+void  checkFiles(ifstream& corruptedSeqFile, ifstream& correctedSeqFile, ifstream& mapFile);
 string getStatistics(MeasuredData data);
+
 
 int main(int argc, const char * argv[]) {
     
@@ -27,36 +32,23 @@ int main(int argc, const char * argv[]) {
     if(options.optionsState() == OPS_ERR)  return 1;
     
     //opening/loading input files
-    string genome = loadGenome(options.getGenomeFName());
+    Fasta genome = loadGenome(options.getGenomeFName());
     ifstream corruptedSeqFile(options.getCorruptedSeqFName());
     ifstream correctedSeqFile(options.getCorrectedSeqFName());
     ifstream mapFile(options.getSeqMapFName());
+    checkFiles(corruptedSeqFile, correctedSeqFile, mapFile);
     
-    if (!corruptedSeqFile.is_open()) {
-        cerr << "Cannot open file with corrupted sequences" << endl << endl;
-        exit(1);
-    }
-    
-    if (!correctedSeqFile.is_open()) {
-        cerr << "Cannot open file with corrected sequences" << endl << endl;
-        exit(1);
-    }
-    
-    if (!mapFile.is_open()) {
-        cerr << "Cannot open mapping file" << endl << endl;
-        exit(1);
-    }
-    
+    //measure
     ostringstream resultStream;
-    resultStream << "Genome length: " << genome.size() << endl;
+    resultStream << "Genome fragment count: " << genome.getFragmentCount() << endl;
     
-    MeasuredData data = measure(genome, corruptedSeqFile, correctedSeqFile, mapFile);
+    MeasuredData data = measure(corruptedSeqFile, correctedSeqFile, mapFile, genome);
     
-    resultStream << "Number of sequences: " << data.seqCount << endl << endl;
-
+    resultStream << "Number of sequences: " << data.seqCount << endl;
+    resultStream << endl;
     resultStream << getStatistics(data) << endl;
     
-    //output result
+    //output result (to file)
     if (Optional<string> outputFileName = options.getOutputFile()) {
         ofstream file(*outputFileName);
         if(!file.good()) {
@@ -64,56 +56,85 @@ int main(int argc, const char * argv[]) {
             return 1;
         }
         file << resultStream.str();
-    } else {
-        cout << resultStream.str();
     }
+    
+    cout << resultStream.str();
+    cout << "Done" << endl << endl;
     
     return 0;
 }
 
-string loadGenome(string genomeFileName) {
-    ifstream genomeFile(genomeFileName);
-    string genome;
+Fasta loadGenome(string genomeFileName) {
+    Fasta genome;
+    try {
+        genome.loadFromFile(genomeFileName);
+        
+    } catch (FastaException& e) {
+        if (string(e.what()) == string("cannot-open-file")) {
+            cerr << "Cannot open genome file" << endl;
+            cerr << "For help, run with --help" << endl;
+            cerr << endl;
+            exit(1);
+        } else {
+            cerr << "Problem with reading genome data" << endl;
+            cerr << "For help, run with --help" << endl;
+            cerr << endl;
+            exit(1);
+        }
+    }
     
-    if (!genomeFile.is_open()) {
-        cerr << "Cannot open genome file" << endl;
+    //check if genome has only allowed characters
+    for (ULL fragIndex = 0; fragIndex < genome.getFragmentCount(); fragIndex++) {
+        string& fragment = genome.getData(fragIndex);
+        
+        for (char ch: fragment) {
+            if (count(allowedChar.begin(), allowedChar.end(), ch) == 0) {
+                cerr << "Bad data in genome file" << endl;
+                cerr << "For help, run with --help" << endl;
+                cerr << endl;
+                exit(1);
+            }
+        }
+    }
+    
+    return genome;
+}
+
+void checkFiles(ifstream& corruptedSeqFile, ifstream& correctedSeqFile, ifstream& mapFile) {
+    if (!corruptedSeqFile.is_open()) {
+        cerr << "Cannot open file with corrupted sequences" << endl;
         cerr << "For help, run with --help" << endl;
         cerr << endl;
         exit(1);
     }
     
-    genomeFile >> genome;
-    
-    if (genomeFile.fail()) {
-        cerr << "Cannot load genome from file" << endl << endl;
+    if (!correctedSeqFile.is_open()) {
+        cerr << "Cannot open file with corrected sequences" << endl;
+        cerr << "For help, run with --help" << endl;
+        cerr << endl;
         exit(1);
     }
     
-    transform(genome.begin(), genome.end(), genome.begin(), ::toupper);
-    
-    //check if genome has only A C G T characters
-    for_each(genome.begin(), genome.end(), [&](char& c){
-        if (c != 'A' && c != 'C' && c != 'G' && c != 'T') {
-            cerr << "Bad data in genome file" << endl << endl;
-            exit(1);
-        }
-    });
-    
-    return genome;
+    if (!mapFile.is_open()) {
+        cerr << "Cannot open mapping file" << endl;
+        cerr << "For help, run with --help" << endl;
+        cerr << endl;
+        exit(1);
+    }
 }
 
 string getStatistics(MeasuredData data) {
     
     ostringstream os;
     os << "Statistics:" << endl;
-    os << "True negatives:  " << std::setw(10) << data.counter[BS_TN] << endl;
-    os << "True positives:  " << std::setw(10) << data.counter[BS_TP] << endl;
-    os << "False negatives: " << std::setw(10) << data.counter[BS_FN] << endl;
-    os << "False positives: " << std::setw(10) << data.counter[BS_FP] << endl;
+    os << "True negatives:  " << std::setw(10) << data.counter[BS_TrueNegative] << endl;
+    os << "True positives:  " << std::setw(10) << data.counter[BS_TruePositive] << endl;
+    os << "False negatives: " << std::setw(10) << data.counter[BS_FalseNegative] << endl;
+    os << "False positives: " << std::setw(10) << data.counter[BS_FalsePositive] << endl;
     os << endl;
     
     ULL baseCount = 0;
-    for (int i=0; i<BS_MAX; i++) baseCount += data.counter[i];
+    for (int i=0; i < 4; i++) baseCount += data.counter[i];
     
     //print original error count
     double percentage = static_cast<double>(data.originalErrors)/static_cast<double>(baseCount);
@@ -122,7 +143,7 @@ string getStatistics(MeasuredData data) {
     os << percentage << "%" << endl;
     
     //print errors left
-    ULL errorsLeft = data.counter[BS_FN] + data.counter[BS_FP];
+    ULL errorsLeft = data.counter[BS_FalseNegative] + data.counter[BS_FalsePositive];
 
     percentage = static_cast<double>(errorsLeft)/static_cast<double>(baseCount);
     percentage *= 100;
@@ -131,8 +152,8 @@ string getStatistics(MeasuredData data) {
     
     //print gain
     double gain = 
-        static_cast<double>(data.counter[BS_TP] - data.counter[BS_FP]) /
-	static_cast<double>(data.counter[BS_TP] + data.counter[BS_FN]);
+        static_cast<double>(data.counter[BS_TruePositive] - data.counter[BS_FalsePositive]) /
+	static_cast<double>(data.counter[BS_TruePositive] + data.counter[BS_FalseNegative]);
     os << "Gain: " << gain << endl;
     
     //print unaltered sequences

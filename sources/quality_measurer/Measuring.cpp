@@ -1,20 +1,36 @@
 //
 //  Measuring.cpp
-//  testing system
+//  Corrector Tester
 //
-//  Created by Miloš Šimek on 30.04.15.
-//  Copyright (c) 2015 Miloš Šimek. All rights reserved.
+//  Created by Miloš Šimek on 22/12/2016.
+//
 //
 
 #include "Measuring.hpp"
 
-MeasuredData measure(string& genome,
-             ifstream& corruptedSeqFile, ifstream& correctedSeqFile,
-             ifstream& mapFile) {
+//function declarations
+//tuple: corrupted sequence, corrected sequence, genome sequence
+tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
+                                            ifstream& correctedSeqFile,
+                                            ifstream& mapFile,
+                                            Fasta& genome);
+unsigned countDifferences(string& first, string& second);
+bool isUnaltered(string& genomeSeq, string& corruptedSeq, string& correctedSeq);
+void countStates(string& genomeSeq, string& corruptedSeq, string& correctedSeq,
+                 MeasuredData& measured);
+BaseState getState(char genBase, char corruptedBase, char correctedBase);
+
+
+
+
+//function definitions
+MeasuredData measure(ifstream& corruptedSeqFile,
+                     ifstream& correctedSeqFile,
+                     ifstream& mapFile,
+                     Fasta& genome) {
     
     MeasuredData measured;
     tuple<string, string, string> sequences;
-    
     sequences = loadSequences(corruptedSeqFile, correctedSeqFile, mapFile, genome);
     
     while (get<0>(sequences).size()) {
@@ -27,19 +43,75 @@ MeasuredData measure(string& genome,
         measured.originalErrors += countDifferences(genomeSeq, corruptedSeq);
         
         //count unaltered sequences
-        bool isUnalt = isUnaltered(genomeSeq, corruptedSeq, correctedSeq);
-        if (isUnalt) measured.unalteredSeqCount++;
+        if (isUnaltered(genomeSeq, corruptedSeq, correctedSeq)) {
+            measured.unalteredSeqCount++;
+        }
         
         //count states
         countStates(genomeSeq, corruptedSeq, correctedSeq, measured);
         
-        //cout sequences
+        //count sequences
         measured.seqCount++;
         
         sequences = loadSequences(corruptedSeqFile, correctedSeqFile, mapFile, genome);
     }
     
     return measured;
+}
+
+tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
+                                            ifstream& correctedSeqFile,
+                                            ifstream& mapFile,
+                                            Fasta& genome) {
+    string corruptedSeq, correctedSeq, genomeSeq;
+    
+    try {
+        corruptedSeq = loadNextSeq(corruptedSeqFile);
+        correctedSeq = loadNextSeq(correctedSeqFile);
+        
+        //check files consistency
+        bool corruptedEmpty = correctedSeq.empty();
+        bool correctedEmpty = correctedSeq.empty();
+        
+            //if both empty, treat like end of file
+        if (corruptedEmpty && correctedEmpty) return make_tuple(string(), string(), string());
+        
+        if ((!corruptedEmpty && correctedEmpty) || (corruptedEmpty && !correctedEmpty)) {
+            cerr << "Inconsistency in input files" << endl << endl;
+            exit(1);
+        }
+        
+        if (corruptedSeq.size() != correctedSeq.size()) {
+            cerr << "Inconsistency in input files" << endl << endl;
+            exit(1);
+        }
+        
+        //get matching genome part
+        //pair: fragment, position
+        pair<unsigned, ULL> seqMapEntry = loadNextMapEntry(mapFile);
+        
+            //check consistency
+        if (seqMapEntry.first >= genome.getFragmentCount() ||
+            seqMapEntry.second > (genome.getData(seqMapEntry.first).size() -
+            corruptedSeq.size())) {
+            
+            cerr << "Corrupted map file" << endl;
+            cerr << endl;
+            exit(1);
+        }
+        
+        genomeSeq = genome.getData(seqMapEntry.first).
+            substr(seqMapEntry.second, corruptedSeq.size());
+        
+        assert(corruptedSeq.length() == correctedSeq.length());
+        assert(genomeSeq.length() == corruptedSeq.length());
+        
+    } catch (exception &e) {
+        cerr << "Problem while loading files" << endl << endl;
+        exit(1);
+    }
+    
+    return make_tuple(corruptedSeq, correctedSeq, genomeSeq);
 }
 
 unsigned countDifferences(string& first, string& second) {
@@ -50,16 +122,6 @@ unsigned countDifferences(string& first, string& second) {
     }
     
     return count;
-}
-
-void countStates(string& genomeSeq, string& corruptedSeq, string& correctedSeq,
-                 MeasuredData& measured) {
-    
-    for (unsigned pos=0; pos < corruptedSeq.size(); pos++) {
-        BaseState state = getState(genomeSeq[pos], corruptedSeq[pos], correctedSeq[pos]);
-        
-	measured.counter[state]++;
-    }
 }
 
 bool isUnaltered(string& genomeSeq, string& corruptedSeq, string& correctedSeq) {
@@ -74,55 +136,22 @@ bool isUnaltered(string& genomeSeq, string& corruptedSeq, string& correctedSeq) 
     return false;
 }
 
-BaseState getState(char genBase, char corruptedBase, char correctedBase) {
-    if (genBase == corruptedBase) {
-        if (corruptedBase == correctedBase) return BS_TN;
-        else return BS_FP;
-    } else {
-        if (genBase == correctedBase) return BS_TP;
-	else return BS_FN;
+void countStates(string& genomeSeq, string& corruptedSeq, string& correctedSeq,
+                 MeasuredData& measured) {
+    
+    for (unsigned pos=0; pos < corruptedSeq.size(); pos++) {
+        BaseState state = getState(genomeSeq[pos], corruptedSeq[pos], correctedSeq[pos]);
+        
+        measured.counter[state]++;
     }
 }
 
-tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
-                                           ifstream& correctedSeqFile,
-                                           ifstream& mapFile,
-                                           string& genome) {
-    string corruptedSeq, correctedSeq, genomeSeq;
-    
-    try {
-        corruptedSeq = loadNextSeq(corruptedSeqFile);
-        correctedSeq = loadNextSeq(correctedSeqFile);
-        
-        //check files
-        bool corruptedEmpty = correctedSeq.empty();
-        bool correctedEmpty = correctedSeq.empty();
-        if (corruptedEmpty && correctedEmpty) return make_tuple(string(), string(), string());
-        
-        if ((!corruptedEmpty && correctedEmpty) || (corruptedEmpty && !correctedEmpty)) {
-            cerr << "Inconsistency in input files" << endl << endl;
-            exit(1);
-        }
-        
-        if (corruptedSeq.size() != correctedSeq.size()) {
-            cerr << "Inconsistency in input files" << endl << endl;
-            exit(1);
-        }
-        
-        //get matching genome part
-        ULL genomePos = loadNextSeqPos(mapFile);
-        ULL maxGenomePos = genome.size() - corruptedSeq.size();
-        if (genomePos > maxGenomePos) {
-            cerr << "Corrupted map file" << endl;
-            exit(1);
-        }
-        genomeSeq = genome.substr(genomePos,corruptedSeq.size());
-        assert(genomeSeq.length() == corruptedSeq.length());
-        
-    } catch (exception &e) {
-        cerr << "Problem while loading files" << endl << endl;
-        exit(1);
+BaseState getState(char genBase, char corruptedBase, char correctedBase) {
+    if (genBase == corruptedBase) {
+        if (corruptedBase == correctedBase) return BS_TrueNegative;
+        else return BS_FalsePositive;
+    } else {
+        if (genBase == correctedBase) return BS_TruePositive;
+        else return BS_FalseNegative;
     }
-    
-    return make_tuple(corruptedSeq, correctedSeq, genomeSeq);
 }

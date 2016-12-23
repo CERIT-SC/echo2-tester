@@ -13,7 +13,7 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
     po::options_description options("Options");
     options.add_options()
     ("help", "Produce help message\n")
-    ("genome,g",po::value<string>()->default_value("genome.txt"),
+    ("genome,g",po::value<string>()->default_value("genome.fa"),
         "Specifies genome file")
     ("corrupted,c", po::value<string>()->default_value("corrupted.fastq"),
         "Fastq file of corrupted sequences")
