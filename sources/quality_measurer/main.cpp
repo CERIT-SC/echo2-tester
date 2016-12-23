@@ -45,7 +45,8 @@ int main(int argc, const char * argv[]) {
     
     //create result
     ostringstream resultStream;
-    resultStream << "Genome fragment count: " << genome.getFragmentCount() << endl;
+    resultStream << "Genome fragment count: " << genome.getFragmentCount() <<
+    " (first fragment length: " << genome.getData(0).size() << ")" << endl;
     resultStream << "Number of sequences: " << data.seqCount << endl;
     resultStream << endl;
     resultStream << getStatistics(data) << endl;
@@ -86,6 +87,14 @@ Fasta loadGenome(string genomeFileName) {
             cerr << endl;
             exit(1);
         }
+    }
+    
+    //check if loaded data aren't empty
+    if (genome.getFragmentCount() == 0) {
+        cerr << "No fragments loaded from genome file" << endl;
+        cerr << "Aborting" << endl;
+        cerr << endl;
+        exit(1);
     }
     
     //check if genome has only allowed characters
