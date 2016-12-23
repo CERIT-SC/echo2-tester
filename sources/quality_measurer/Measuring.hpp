@@ -9,6 +9,12 @@
 #ifndef Measuring_hpp
 #define Measuring_hpp
 
+#include <iostream>
+#include <string>
+#include <stdexcept>
+#include <tuple>
+#include <utility>
+
 #include "FileLoaders.hpp"
 #include "../global/Fasta.hpp"
 using namespace std;
@@ -28,10 +34,10 @@ struct MeasuredData {
     ULL seqCount = 0;
 };
 
-void measure(Fasta& genome,
-             ifstream& corruptedSeqFile,
-             ifstream& correctedSeqFile,
-             ifstream& mapFile);
+MeasuredData measure(ifstream& corruptedSeqFile,
+                     ifstream& correctedSeqFile,
+                     ifstream& mapFile,
+                     Fasta& genome);
 
 
 #endif /* Measuring_hpp */
