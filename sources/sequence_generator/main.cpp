@@ -231,10 +231,10 @@ void generateErrors(vector<Sequence>& sequences,
             }
             
             //get probabilities as whole numbers
-            unsigned probA = probMatrix(seqPos, row, 0) * 10000;
-            unsigned probC = probMatrix(seqPos, row, 1) * 10000;
-            unsigned probG = probMatrix(seqPos, row, 2) * 10000;
-            unsigned probT = probMatrix(seqPos, row, 3) * 10000;
+            unsigned probA = probMatrix(seqPos, row, 0) * 1000000000;
+            unsigned probC = probMatrix(seqPos, row, 1) * 1000000000;
+            unsigned probG = probMatrix(seqPos, row, 2) * 1000000000;
+            unsigned probT = probMatrix(seqPos, row, 3) * 1000000000;
             
             unsigned fullProbabilityNum = probA + probC + probG + probT;
             unsigned randNumber = randGen() % fullProbabilityNum;
