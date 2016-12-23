@@ -31,7 +31,7 @@ string loadNextSeq(ifstream& inputFile) {
     
     
     //check sequence correctness
-    array<char, 8> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't'};
+    array<char, 9> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't', 'N'};
     
     for (char ch: seq) {
         if (count(alowedChar.begin(), alowedChar.end(), ch) == 0) {

@@ -84,7 +84,7 @@ Fasta loadGenome(string genomeFileName) {
     }
     
     //check if genome has only A C G T characters
-    array<char, 8> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't'};
+    array<char, 9> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't', 'N'};
     
     for (ULL fragIndex = 0; fragIndex < genome.getFragmentCount(); fragIndex++) {
         string& fragment = genome.getData(fragIndex);

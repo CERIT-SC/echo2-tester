@@ -8,3 +8,14 @@
 
 #include "Measuring.hpp"
 
+
+
+void measure(Fasta& genome,
+             ifstream& corruptedSeqFile,
+             ifstream& correctedSeqFile,
+             ifstream& mapFile) {
+    //vytvořit strukturu pro ukládání dat
+    
+    
+    
+}
