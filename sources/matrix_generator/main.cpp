@@ -16,8 +16,10 @@
 #include "../global/Optional.hpp"
 using namespace std;
 
+//function declarations
 N44Matrix generateRandMatrix(unsigned length, float mean);
 double getRandDouble(double rangeMin, double rangeMax, int numOfValues);
+
 
 int main(int argc, const char * argv[]) {
     
