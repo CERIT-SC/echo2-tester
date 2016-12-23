@@ -59,8 +59,7 @@ int main(int argc, const char * argv[]) {
     }
     
     cout << resultStream.str();
-    
-    cout << "Done" << endl;
+    cout << "Done" << endl << endl;
     
     return 0;
 }
