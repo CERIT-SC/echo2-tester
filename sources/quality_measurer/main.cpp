@@ -155,11 +155,15 @@ string getStatistics(MeasuredData data) {
     os << "Errors left: " << errorsLeft << " - ";
     os << percentage << "%" << endl;
     
-    //print gain
-    double gain = 
+    //print relative gain
+    double relativeGain =
         static_cast<double>(data.counter[BS_TruePositive] - data.counter[BS_FalsePositive]) /
 	static_cast<double>(data.counter[BS_TruePositive] + data.counter[BS_FalseNegative]);
-    os << "Gain: " << gain << endl;
+    os << "Relative gain: " << relativeGain << endl;
+    
+    //print absolute gain
+    double absoluteGain = static_cast<double>(data.originalErrors)/static_cast<double>(errorsLeft);
+    os << "Absolute gain: " << absoluteGain << endl;
     
     //print unaltered sequences
     percentage = static_cast<double>(data.unalteredSeqCount)/static_cast<double>(data.seqCount);
