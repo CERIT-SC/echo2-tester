@@ -95,7 +95,7 @@ tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
             seqMapEntry.second > (genome.getData(seqMapEntry.first).size() -
             corruptedSeq.size())) {
             
-            cerr << "Corrupted map file" << endl;
+            cerr << "Mismatch between map file and genome file" << endl;
             cerr << endl;
             exit(1);
         }
