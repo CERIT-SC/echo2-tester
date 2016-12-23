@@ -7,5 +7,5 @@ It is developed for purposes of testing DNA error correctors.
 
 Requirements
 ------------
-- Boost - Program Options
+- Boost - Program Options, Algorithm
 - CppUnit (for Test Suite)
