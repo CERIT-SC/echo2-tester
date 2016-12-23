@@ -14,7 +14,8 @@
 #include <limits>
 #include <stdexcept>
 #include <utility>
-#include <array>
+
+#include "Setup.hpp"
 
 using namespace std;
 typedef unsigned long long ULL;

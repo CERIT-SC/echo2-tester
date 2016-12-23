@@ -31,8 +31,6 @@ string loadNextSeq(ifstream& inputFile) {
     
     
     //check sequence correctness
-    array<char, 9> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't', 'N'};
-    
     for (char ch: seq) {
         if (count(alowedChar.begin(), alowedChar.end(), ch) == 0) {
             throw runtime_error("seq-bad-data");
