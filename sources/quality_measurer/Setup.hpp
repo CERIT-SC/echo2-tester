@@ -11,6 +11,6 @@
 
 #include <array>
 
-const std::array<char, 9> alowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't', 'N'};
+const std::array<char, 9> allowedChar = {'A', 'C', 'G', 'T', 'a', 'c', 'g', 't', 'N'};
 
 #endif /* Setup_hpp */

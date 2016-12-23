@@ -88,7 +88,7 @@ Fasta loadGenome(string genomeFileName) {
         string& fragment = genome.getData(fragIndex);
         
         for (char ch: fragment) {
-            if (count(alowedChar.begin(), alowedChar.end(), ch) == 0) {
+            if (count(allowedChar.begin(), allowedChar.end(), ch) == 0) {
                 cerr << "Bad data in genome file" << endl;
                 cerr << "For help, run with --help" << endl;
                 cerr << endl;

@@ -32,7 +32,7 @@ string loadNextSeq(ifstream& inputFile) {
     
     //check sequence correctness
     for (char ch: seq) {
-        if (count(alowedChar.begin(), alowedChar.end(), ch) == 0) {
+        if (count(allowedChar.begin(), allowedChar.end(), ch) == 0) {
             throw runtime_error("seq-bad-data");
         }
     }
