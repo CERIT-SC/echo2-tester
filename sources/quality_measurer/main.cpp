@@ -32,6 +32,7 @@ int main(int argc, const char * argv[]) {
     if(options.optionsState() == OPS_ERR)  return 1;
     
     //opening/loading input files
+    cout << "Loading files" << endl;
     Fasta genome = loadGenome(options.getGenomeFName());
     ifstream corruptedSeqFile(options.getCorruptedSeqFName());
     ifstream correctedSeqFile(options.getCorrectedSeqFName());
@@ -39,16 +40,17 @@ int main(int argc, const char * argv[]) {
     checkFiles(corruptedSeqFile, correctedSeqFile, mapFile);
     
     //measure
-    ostringstream resultStream;
-    resultStream << "Genome fragment count: " << genome.getFragmentCount() << endl;
-    
+    cout << "Measuring" << endl;
     MeasuredData data = measure(corruptedSeqFile, correctedSeqFile, mapFile, genome);
     
+    //create result
+    ostringstream resultStream;
+    resultStream << "Genome fragment count: " << genome.getFragmentCount() << endl;
     resultStream << "Number of sequences: " << data.seqCount << endl;
     resultStream << endl;
     resultStream << getStatistics(data) << endl;
     
-    //output result (to file)
+    //output result to file
     if (Optional<string> outputFileName = options.getOutputFile()) {
         ofstream file(*outputFileName);
         if(!file.good()) {
@@ -58,8 +60,11 @@ int main(int argc, const char * argv[]) {
         file << resultStream.str();
     }
     
+    //output result to console
+    cout << endl;
     cout << resultStream.str();
-    cout << "Done" << endl << endl;
+    cout << "Done" << endl;
+    cout << endl;
     
     return 0;
 }
