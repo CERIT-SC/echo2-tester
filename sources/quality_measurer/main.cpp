@@ -158,7 +158,6 @@ string getStatistics(MeasuredData data) {
     
     //print errors left
     ULL errorsLeft = data.counter[BS_FalseNegative] + data.counter[BS_FalsePositive];
-
     percentage = static_cast<double>(errorsLeft)/static_cast<double>(baseCount);
     percentage *= 100;
     os << "Errors left: " << errorsLeft << " - ";
