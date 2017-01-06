@@ -14,6 +14,7 @@
 #include <limits>
 #include <stdexcept>
 #include <utility>
+#include <algorithm>
 
 #include "Setup.hpp"
 
