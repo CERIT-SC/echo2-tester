@@ -51,6 +51,7 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
         
         cout << endl;
         cout << "Sequence Generator" << endl;
+        cout << "Version: " << VERSION_STRING << endl;
         cout << "This tool randomly generates seuences from genome file (-g)." << endl;
         cout << "Genome must be in fasta format. Amount of sequences generated" << endl;
         cout << "is specified by coverage (-c). I.e. coverage 2.5 means, that there" << endl;

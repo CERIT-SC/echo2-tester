@@ -42,6 +42,7 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
         
         cout << endl;
         cout << "Quality Measurer" << endl;
+        cout << "Version: " << VERSION_STRING << endl;
         cout << "This tool takes genome file (in fasta format), corrupted and" << endl;
         cout << "corrected sequences (in fastq format) and sequence mapping file." << endl;
         cout << "Program produces statistics about quality of corrections." << endl;

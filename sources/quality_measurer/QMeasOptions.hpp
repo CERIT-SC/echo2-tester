@@ -14,6 +14,7 @@
 #include <boost/program_options.hpp>
 
 #include "../global/Optional.hpp"
+#include "../global/GlobalSetup.hpp"
 
 namespace po = boost::program_options;
 using namespace std;

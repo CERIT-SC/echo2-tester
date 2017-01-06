@@ -105,6 +105,7 @@
 		DC1404441E0308B6002F9125 /* ProbMatrixLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProbMatrixLoader.hpp; sourceTree = "<group>"; };
 		DC1404491E030F9F002F9125 /* Fasta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fasta.cpp; sourceTree = "<group>"; };
 		DC14044A1E030F9F002F9125 /* Fasta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Fasta.hpp; sourceTree = "<group>"; };
+		DC7C20931E1FC755000DBEA2 /* GlobalSetup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GlobalSetup.hpp; sourceTree = "<group>"; };
 		DCF180071DFE21E500818057 /* DnaGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DnaGenOptions.hpp; sourceTree = "<group>"; };
 		DCF180081DFE224800818057 /* DnaGenOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DnaGenOptions.cpp; sourceTree = "<group>"; };
 		E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measuring.cpp; sourceTree = "<group>"; };
@@ -235,6 +236,7 @@
 				DC0461E11DF6ED200051C37E /* Optional.hpp */,
 				DC14044A1E030F9F002F9125 /* Fasta.hpp */,
 				DC1404491E030F9F002F9125 /* Fasta.cpp */,
+				DC7C20931E1FC755000DBEA2 /* GlobalSetup.hpp */,
 			);
 			name = global;
 			path = ../sources/global;

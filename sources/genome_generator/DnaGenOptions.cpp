@@ -42,6 +42,7 @@ DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
         
         cout << endl;
         cout << "Genome Generator" << endl;
+        cout << "Version: " << VERSION_STRING << endl;
         cout << "This tool generates pseudo-random genome fragments in fasta format." << endl;
         cout << "Program will generate -n fragments of length -l." << endl;
         cout << "Only parameter length is required." << endl;

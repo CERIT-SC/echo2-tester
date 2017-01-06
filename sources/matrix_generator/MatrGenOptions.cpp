@@ -40,6 +40,7 @@ MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
         
         cout << endl;
         cout << "Matrix Generator" << endl;
+        cout << "Version: " << VERSION_STRING << endl;
         cout << "This tool generates 3 dimensional probability matrix" << endl;
         cout << "for the purposes of setting error rate independently for" << endl;
         cout << "each base of a sequence." << endl;
