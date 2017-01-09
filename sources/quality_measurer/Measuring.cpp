@@ -38,6 +38,11 @@ MeasuredData measure(ifstream& corruptedSeqFile,
         string& correctedSeq = get<1>(sequences);
         string& genomeSeq = get<2>(sequences);
         
+        //to upper all bases to treat i.e. C and c as same base
+        boost::to_upper(corruptedSeq);
+        boost::to_upper(correctedSeq);
+        boost::to_upper(genomeSeq);
+        
         //4 parts:
         //count original errors
         measured.originalErrors += countDifferences(genomeSeq, corruptedSeq);

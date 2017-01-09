@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <tuple>
 #include <utility>
+#include <boost/algorithm/string.hpp>
 
 #include "FileLoaders.hpp"
 #include "../global/Fasta.hpp"
