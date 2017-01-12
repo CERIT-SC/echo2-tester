@@ -44,12 +44,29 @@ string loadNextSeq(ifstream& inputFile) {
     //shouldn't be a problem: number of loaded sequences should be seen in program output
 }
 
-pair<unsigned, ULL> loadNextMapEntry(ifstream& mapFile) {
-    unsigned fragment;
-    ULL position;
-    mapFile >> fragment >> position;
-    
-    if (mapFile.fail()) throw runtime_error("file-bad");
-    
-    return make_pair(fragment, position);
+Optional<pair<unsigned, ULL>> loadNextMapEntry(ifstream& mapFile) {
+    try {
+        string firstEntry;
+        mapFile >> firstEntry;
+        
+        //find out if sequence is mapped to genome
+        if (firstEntry == string("notMapped")) return Opt::NoValue;
+        
+        //load fragment
+        int fragment = stoi(firstEntry); //throws exeption if can't convert
+        if (fragment < 0) throw;
+        
+        //load position
+        ULL position;
+        mapFile >> position;
+        
+        //check file
+        if (mapFile.fail()) throw;
+        
+        return make_pair(static_cast<unsigned>(fragment), position);
+        
+    } catch (...) {
+        throw runtime_error("corrupted-map-file");
+    }
 }
+
