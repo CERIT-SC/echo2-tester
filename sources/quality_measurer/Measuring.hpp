@@ -34,7 +34,7 @@ struct MeasuredData {
     ULL originalErrors = 0;
     ULL unalteredSeqCount = 0;
     ULL seqCount = 0;
-    ULL skippedSeqCount = 0;
+    ULL notMappedSeqCount = 0;
 };
 
 MeasuredData measure(ifstream& corruptedSeqFile,

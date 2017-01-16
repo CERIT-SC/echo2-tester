@@ -41,12 +41,12 @@ MeasuredData measure(ifstream& corruptedSeqFile,
         
         //skip sequences that are not mapped
         if (!sequences) {
-            measured.skippedSeqCount++;
+            measured.notMappedSeqCount++;
             sequences = loadSequences(corruptedSeqFile, correctedSeqFile, mapFile, genome);
             continue;
         }
         
-        //measure data for sequence
+        //MEASURE DATA FOR SEQUENCE
         string& corruptedSeq = get<0>(*sequences);
         string& correctedSeq = get<1>(*sequences);
         string& genomeSeq = get<2>(*sequences);
