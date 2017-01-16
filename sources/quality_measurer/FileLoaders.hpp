@@ -26,6 +26,7 @@ typedef unsigned long long ULL;
 string loadNextSeq(ifstream& inputFile);
 
 //pair - fragment, position
+//returns NoValue if sequence isn't mapped
 Optional<pair<unsigned, ULL>> loadNextMapEntry(ifstream& mapFile);
 
 #endif
