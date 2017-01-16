@@ -46,6 +46,7 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
         cout << "This tool takes genome file (in fasta format), corrupted and" << endl;
         cout << "corrected sequences (in fastq format) and sequence mapping file." << endl;
         cout << "Program produces statistics about quality of corrections." << endl;
+        cout << "Not mapped sequences are ignored." << endl;
         cout << endl;
         cout << options << endl;
         return;
