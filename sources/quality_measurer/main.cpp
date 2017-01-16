@@ -47,7 +47,9 @@ int main(int argc, const char * argv[]) {
     ostringstream resultStream;
     resultStream << "Genome fragment count: " << genome.getFragmentCount() <<
     " (first fragment length: " << genome.getData(0).size() << ")" << endl;
-    resultStream << "Number of sequences: " << data.seqCount << endl;
+    resultStream << "Sequence count: " << data.seqCount << endl;
+    resultStream << "Not mapped sequence count: " << data.notMappedSeqCount << " (ignored)" << endl;
+    resultStream << "Sequence used: " << data.seqCount - data.notMappedSeqCount << endl;
     resultStream << endl;
     resultStream << getStatistics(data) << endl;
     
@@ -149,6 +151,7 @@ string getStatistics(MeasuredData data) {
     
     ULL baseCount = 0;
     for (int i=0; i < 4; i++) baseCount += data.counter[i];
+    ULL sequenceUsed = data.seqCount - data.notMappedSeqCount;
     
     //print original error count
     double percentage = static_cast<double>(data.originalErrors)/static_cast<double>(baseCount);
@@ -174,7 +177,7 @@ string getStatistics(MeasuredData data) {
     os << "Absolute gain: " << absoluteGain << endl;
     
     //print unaltered sequences
-    percentage = static_cast<double>(data.unalteredSeqCount)/static_cast<double>(data.seqCount);
+    percentage = static_cast<double>(data.unalteredSeqCount)/static_cast<double>(sequenceUsed);
     percentage *= 100;
     os << "Unaltered sequences: " << data.unalteredSeqCount << " - ";
     os << percentage << "%" << endl;
