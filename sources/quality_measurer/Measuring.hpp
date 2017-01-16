@@ -18,6 +18,7 @@
 
 #include "FileLoaders.hpp"
 #include "../global/Fasta.hpp"
+#include "../global/Optional.hpp"
 using namespace std;
 typedef unsigned long long ULL;
 
@@ -33,6 +34,7 @@ struct MeasuredData {
     ULL originalErrors = 0;
     ULL unalteredSeqCount = 0;
     ULL seqCount = 0;
+    ULL skippedSeqCount = 0;
 };
 
 MeasuredData measure(ifstream& corruptedSeqFile,

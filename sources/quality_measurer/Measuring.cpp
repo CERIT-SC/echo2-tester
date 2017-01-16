@@ -10,10 +10,11 @@
 
 //function declarations
 //tuple: corrupted sequence, corrected sequence, genome sequence
-tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
-                                            ifstream& correctedSeqFile,
-                                            ifstream& mapFile,
-                                            Fasta& genome);
+//optional - returns Opt::NoValue if there is no sequence to genome mapping
+Optional<tuple<string, string, string>> loadSequences(ifstream& corruptedSeqFile,
+                                                      ifstream& correctedSeqFile,
+                                                      ifstream& mapFile,
+                                                      Fasta& genome);
 unsigned countDifferences(string& first, string& second);
 bool isUnaltered(string& genomeSeq, string& corruptedSeq, string& correctedSeq);
 void countStates(string& genomeSeq, string& corruptedSeq, string& correctedSeq,
@@ -30,20 +31,31 @@ MeasuredData measure(ifstream& corruptedSeqFile,
                      Fasta& genome) {
     
     MeasuredData measured;
-    tuple<string, string, string> sequences;
+    Optional<tuple<string, string, string>> sequences;
     sequences = loadSequences(corruptedSeqFile, correctedSeqFile, mapFile, genome);
     
-    while (get<0>(sequences).size()) {
-        string& corruptedSeq = get<0>(sequences);
-        string& correctedSeq = get<1>(sequences);
-        string& genomeSeq = get<2>(sequences);
+    //continue until end of file
+    while (sequences == Opt::NoValue || get<0>(*sequences).size()) {
+        //count sequences
+        measured.seqCount++;
+        
+        //skip sequences that are not mapped
+        if (!sequences) {
+            measured.skippedSeqCount++;
+            sequences = loadSequences(corruptedSeqFile, correctedSeqFile, mapFile, genome);
+            continue;
+        }
+        
+        //measure data for sequence
+        string& corruptedSeq = get<0>(*sequences);
+        string& correctedSeq = get<1>(*sequences);
+        string& genomeSeq = get<2>(*sequences);
         
         //to upper all bases to treat i.e. C and c as same base
         boost::to_upper(corruptedSeq);
         boost::to_upper(correctedSeq);
         boost::to_upper(genomeSeq);
         
-        //4 parts:
         //count original errors
         measured.originalErrors += countDifferences(genomeSeq, corruptedSeq);
         
@@ -55,19 +67,16 @@ MeasuredData measure(ifstream& corruptedSeqFile,
         //count states
         countStates(genomeSeq, corruptedSeq, correctedSeq, measured);
         
-        //count sequences
-        measured.seqCount++;
-        
         sequences = loadSequences(corruptedSeqFile, correctedSeqFile, mapFile, genome);
     }
     
     return measured;
 }
 
-tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
-                                            ifstream& correctedSeqFile,
-                                            ifstream& mapFile,
-                                            Fasta& genome) {
+Optional<tuple<string, string, string>> loadSequences(ifstream& corruptedSeqFile,
+                                                      ifstream& correctedSeqFile,
+                                                      ifstream& mapFile,
+                                                      Fasta& genome) {
     string corruptedSeq, correctedSeq, genomeSeq;
     
     try {
@@ -93,9 +102,12 @@ tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
         
         //get matching genome part
         //pair: fragment, position
-        pair<unsigned, ULL> seqMapEntry = loadNextMapEntry(mapFile);
+        Optional<pair<unsigned, ULL>> entry = loadNextMapEntry(mapFile);
         
-            //check consistency
+        if (!entry) return Opt::NoValue;
+        pair<unsigned, ULL> seqMapEntry = *entry;
+        
+        //check consistency
         if (seqMapEntry.first >= genome.getFragmentCount() ||
             seqMapEntry.second > (genome.getData(seqMapEntry.first).size() -
             corruptedSeq.size())) {
@@ -105,6 +117,7 @@ tuple<string, string, string> loadSequences(ifstream& corruptedSeqFile,
             exit(1);
         }
         
+        //get genome sequence
         genomeSeq = genome.getData(seqMapEntry.first).
             substr(seqMapEntry.second, corruptedSeq.size());
         
