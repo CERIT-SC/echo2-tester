@@ -125,7 +125,7 @@ Optional<tuple<string, string, string>> loadSequences(ifstream& corruptedSeqFile
         assert(genomeSeq.length() == corruptedSeq.length());
         
     } catch (exception &e) {
-        cerr << "Problem while loading files" << endl << endl;
+        cerr << "Problem while loading data" << endl << endl;
         exit(1);
     }
     
