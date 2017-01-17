@@ -54,14 +54,14 @@ Optional<pair<unsigned, ULL>> loadNextMapEntry(ifstream& mapFile) {
         
         //load fragment
         int fragment = stoi(firstEntry); //throws exeption if can't convert
-        if (fragment < 0) throw;
+        if (fragment < 0) throw runtime_error("corrupted-map-file");
         
         //load position
         ULL position;
         mapFile >> position;
         
         //check file
-        if (mapFile.fail()) throw;
+        if (mapFile.fail()) throw runtime_error("corrupted-map-file");
         
         return make_pair(static_cast<unsigned>(fragment), position);
         
