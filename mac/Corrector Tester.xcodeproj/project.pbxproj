@@ -181,8 +181,8 @@
 				DC0461AC1DF6EBA20051C37E /* matrix_generator */,
 				DC0461B71DF6EBC70051C37E /* sequence_generator */,
 				DC0461C21DF6EBF20051C37E /* quality_measurer */,
-				DC0461DE1DF6ECF70051C37E /* global */,
 				DCABE2251E2E141A00A121ED /* samtomap */,
+				DC0461DE1DF6ECF70051C37E /* global */,
 				DC0461EB1DF6EECE0051C37E /* TestSuite */,
 				DC0461921DF6E98F0051C37E /* Products */,
 			);
@@ -444,8 +444,8 @@
 				DC0461AA1DF6EBA20051C37E /* matrix_generator */,
 				DC0461B51DF6EBC70051C37E /* sequence_generator */,
 				DC0461C01DF6EBF20051C37E /* quality_measurer */,
-				DC0461E91DF6EECE0051C37E /* TestSuite */,
 				DCABE2231E2E141A00A121ED /* samtomap */,
+				DC0461E91DF6EECE0051C37E /* TestSuite */,
 			);
 		};
 /* End PBXProject section */
@@ -771,6 +771,7 @@
 				DCABE22A1E2E141A00A121ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
