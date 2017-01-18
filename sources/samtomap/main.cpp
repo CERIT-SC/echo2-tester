@@ -8,8 +8,12 @@
 
 #include <iostream>
 
+#include "SamToMapOptions.hpp"
+
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    //vstup: sam soubor, genome fasta soubor
+    //výstup: map soubor
+    
     return 0;
 }
