@@ -27,6 +27,7 @@
 		DC14044D1E031466002F9125 /* Fasta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404491E030F9F002F9125 /* Fasta.cpp */; };
 		DCABE2271E2E141A00A121ED /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE2261E2E141A00A121ED /* main.cpp */; };
 		DCABE2461E2FABEB00A121ED /* SamToMapOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */; };
+		DCABE2471E30F80C00A121ED /* Fasta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404491E030F9F002F9125 /* Fasta.cpp */; };
 		DCF180091DFE224800818057 /* DnaGenOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCF180081DFE224800818057 /* DnaGenOptions.cpp */; };
 		E9E0C9D91E0C06BA0078C7D8 /* Measuring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */; };
 /* End PBXBuildFile section */
@@ -511,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCABE2461E2FABEB00A121ED /* SamToMapOptions.cpp in Sources */,
+				DCABE2471E30F80C00A121ED /* Fasta.cpp in Sources */,
 				DCABE2271E2E141A00A121ED /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
