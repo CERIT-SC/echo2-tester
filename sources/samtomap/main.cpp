@@ -12,6 +12,9 @@
 #include "SamToMapOptions.hpp"
 #include "../global/Fasta.hpp"
 
+void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile);
+
+
 int main(int argc, const char * argv[]) {
     
     //load options
@@ -48,15 +51,28 @@ int main(int argc, const char * argv[]) {
         cerr << "Cannot create/open map file for writing" << endl << endl;
         return 1;
     }
+
+    cout << "Converting" << endl;
+    convert(samFile, genome, mapFile);
     
-    
-    
-    
-    //vstup: sam soubor, genome fasta soubor
-    //výstup: map soubor
+    cout << "Done" << endl;
+    cout << endl;
     
     //přidat do compile.sh kompilaci samtomap
     //vytvořit makefile pro samtomap
     
     return 0;
+}
+
+void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
+    //pro každou sekvenci
+    //získat ze sam formátu jméno fragmentu (3tí sloupec)
+    //najít fragment v fa a získat index
+    //zapsat index do map souboru
+    //pokud *, zapsat notMapped a pokračovat na další sekvenci
+    
+    //získat pozici v fragmentu 4tý sloupec (číslování od 1)
+    //získat posunutí z 6tého sloupce (vyparsovat z řetězce)
+    //upravit pozici o posunutí
+    //zapsat pozici do map souboru
 }
