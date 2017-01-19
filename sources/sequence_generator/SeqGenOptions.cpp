@@ -9,7 +9,7 @@
 #include "SeqGenOptions.hpp"
 
 SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
-    //define parameters
+    //define options
     po::options_description requiredOptions("Required options");
     requiredOptions.add_options()
     ("genome,g", po::value<string>()->default_value("genome.fa"),
@@ -37,13 +37,14 @@ SeqGenOptions::SeqGenOptions(int argc, const char * argv[]) {
     allOptions.add_options() ("help", "Produce help message");
     allOptions.add(requiredOptions).add(probabilityOptions).add(other);
     
-    //load options
+    //parse options
     try {
         po::store(po::parse_command_line(argc, argv, allOptions), optionMap);
     } catch (exception &e) {
         setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
+    po::notify(optionMap);
     
     //print help
     if (optionMap.count("help")) {
@@ -120,10 +121,10 @@ void SeqGenOptions::checkOptionValidity() {
 
     //check if everything is specified
     checkForExistence("coverage", "Coverage must be specified");
-    if(opState != OPS_OK) return;
+    if (opState != OPS_OK) return;
     
     checkForExistence("seq-len", "Sequence length must be specified");
-    if(opState != OPS_OK) return;
+    if (opState != OPS_OK) return;
     
     if (optionMap.count("prob-uniform") + optionMap.count("prob-file") != 1) {
         

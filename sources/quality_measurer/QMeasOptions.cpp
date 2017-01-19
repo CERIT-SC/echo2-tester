@@ -9,7 +9,7 @@
 #include "QMeasOptions.hpp"
 
 QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
-    //define parameters
+    //define options
     po::options_description options("Options");
     options.add_options()
     ("help", "Produce help message\n")
@@ -28,13 +28,14 @@ QMeasOptions::QMeasOptions(int argc, const char * argv[]) {
     
     options.add(optional);
     
-    //load options
+    //parse options
     try {
         po::store(po::parse_command_line(argc, argv, options), optionMap);
     } catch (exception &e) {
         setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
+    po::notify(optionMap);
     
     //print help
     if (optionMap.count("help")) {
