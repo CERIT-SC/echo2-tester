@@ -6,6 +6,14 @@
 //
 //
 
+//Fasta loads and stores fasta files
+//Fasta objects can throw exception of type FastaException
+//getIndentifier and getData can throw exeption if index is
+//out of bounds
+//loadFromFile can throw an excpeption if problem during
+//file loading occurs
+
+
 #ifndef FastaFile_hpp
 #define FastaFile_hpp
 
