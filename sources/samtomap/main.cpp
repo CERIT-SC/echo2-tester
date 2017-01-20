@@ -83,13 +83,25 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
             continue;
         }
         
-        //find sequence index and write it to map file
+        //find sequence index
+        ULL index = 0;
+        for (; index < genome.getFragmentCount(); index++) {
+            if (genome.getIdentifier(index).find(entry.fragmentName) != string::npos) break;
+        }
         
+        cout << entry.fragmentName << " " << genome.getIdentifier(0) << endl;
+        
+        if (index == genome.getFragmentCount()) {
+            cerr << "Corresponding genome fragment not found" << endl;
+            cerr << endl;
+            exit(1);
+        }
         
         //alter sequence position using cigar string
         
-        //write position to map file
+        //write to map file
         
+        mapFile << index << "\n";
     }
     
     //otestovat na konci mapFile, zda je vše v pořádku?
