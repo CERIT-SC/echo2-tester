@@ -27,5 +27,8 @@ SamEntry SamLoader::loadNextEntry() {
 }
 
 bool SamLoader::endOfFile() {
+    //fail() guarantees, that last loaded entry is invalid
+    //using eof() shows the end of file, but it's uncertain
+    //whether last entry is valid or not
     return file.fail();
 }
