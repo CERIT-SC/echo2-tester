@@ -64,9 +64,6 @@ int main(int argc, const char * argv[]) {
     cout << "Done" << endl;
     cout << endl;
     
-    //přidat do compile.sh kompilaci samtomap
-    //vytvořit makefile pro samtomap
-    
     return 0;
 }
 
