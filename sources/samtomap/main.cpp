@@ -8,14 +8,15 @@
 
 #include <iostream>
 #include <fstream>
-#include <limits>
 #include <stdexcept>
 
 #include "SamToMapOptions.hpp"
+#include "SamLoader.hpp"
 #include "../global/Fasta.hpp"
 typedef unsigned long long ULL;
 
 void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile);
+void loadSamEntry(ifstream& samFile);
 int positionOffset(string cigar);
 
 
@@ -69,8 +70,31 @@ int main(int argc, const char * argv[]) {
 }
 
 void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
+    SamLoader samLoader(samFile);
     
+    while (true) {
+        //load info from sam file
+        SamEntry entry = samLoader.loadNextEntry();
+        if (samLoader.endOfFile()) break;
+        
+        //if sequence has no mapping, mark as notMapped
+        //if (fragmentName == "*") {
+        //    mapFile << "notMapped\n";
+        //    continue;
+        //}
+        
+        //find sequence index and write it to map file
+        
+        
+        //alter sequence position using cigar string
+        
+        //write position to map file
+        
+    }
+    
+    //otestovat na konci mapFile, zda je vše v pořádku?
 }
+
 
 int positionOffset(string cigar) {
     //get position of M
