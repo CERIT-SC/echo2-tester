@@ -89,8 +89,6 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
             if (genome.getIdentifier(index).find(entry.fragmentName) != string::npos) break;
         }
         
-        cout << entry.fragmentName << " " << genome.getIdentifier(0) << endl;
-        
         if (index == genome.getFragmentCount()) {
             cerr << "Corresponding genome fragment not found" << endl;
             cerr << endl;
@@ -98,10 +96,17 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         }
         
         //alter sequence position using cigar string
+            //numbering in sam is from 1 while in map from 0
+        long position = entry.position - positionOffset(entry.cigar) - 1;
+        
+        if (position < 0) {
+            cerr << "Corrupted data in sam file" << endl;
+            cerr << endl;
+            exit(1);
+        }
         
         //write to map file
-        
-        mapFile << index << "\n";
+        mapFile << index << " " << position << "\n";
     }
     
     //otestovat na konci mapFile, zda je vše v pořádku?
