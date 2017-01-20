@@ -8,11 +8,15 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
+#include <stdexcept>
 
 #include "SamToMapOptions.hpp"
 #include "../global/Fasta.hpp"
+typedef unsigned long long ULL;
 
 void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile);
+int positionOffset(string cigar);
 
 
 int main(int argc, const char * argv[]) {
@@ -65,14 +69,28 @@ int main(int argc, const char * argv[]) {
 }
 
 void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
-    //pro každou sekvenci
-    //získat ze sam formátu jméno fragmentu (3tí sloupec)
-    //najít fragment v fa a získat index
-    //zapsat index do map souboru
-    //pokud *, zapsat notMapped a pokračovat na další sekvenci
     
-    //získat pozici v fragmentu 4tý sloupec (číslování od 1)
-    //získat posunutí z 6tého sloupce (vyparsovat z řetězce)
-    //upravit pozici o posunutí
-    //zapsat pozici do map souboru
+}
+
+int positionOffset(string cigar) {
+    //get position of M
+    size_t Mpos = cigar.find("M");
+    if (Mpos == string::npos) return 0;
+    
+    string cigarPart = cigar.substr(0, Mpos); //get part before M
+    
+    size_t Spos = cigarPart.find("S");
+    if (Spos == string::npos) return 0;
+    
+    string offsetStr = cigarPart.substr(0, Spos);
+    
+    int offset;
+    try {
+        offset = stoi(offsetStr);
+        if (offset < 0) throw 0;
+    } catch (...) {
+        throw runtime_error("cigar-format-error");
+    }
+    
+    return offset;
 }
