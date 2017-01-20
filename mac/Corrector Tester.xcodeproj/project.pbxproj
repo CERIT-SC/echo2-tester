@@ -28,6 +28,7 @@
 		DCABE2271E2E141A00A121ED /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE2261E2E141A00A121ED /* main.cpp */; };
 		DCABE2461E2FABEB00A121ED /* SamToMapOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */; };
 		DCABE2471E30F80C00A121ED /* Fasta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404491E030F9F002F9125 /* Fasta.cpp */; };
+		DCABE24E1E32222E00A121ED /* SamLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE24C1E32222E00A121ED /* SamLoader.cpp */; };
 		DCF180091DFE224800818057 /* DnaGenOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCF180081DFE224800818057 /* DnaGenOptions.cpp */; };
 		E9E0C9D91E0C06BA0078C7D8 /* Measuring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */; };
 /* End PBXBuildFile section */
@@ -122,6 +123,8 @@
 		DCABE2261E2E141A00A121ED /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SamToMapOptions.cpp; sourceTree = "<group>"; };
 		DCABE2451E2FABEB00A121ED /* SamToMapOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SamToMapOptions.hpp; sourceTree = "<group>"; };
+		DCABE24C1E32222E00A121ED /* SamLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SamLoader.cpp; sourceTree = "<group>"; };
+		DCABE24D1E32222E00A121ED /* SamLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SamLoader.hpp; sourceTree = "<group>"; };
 		DCF180071DFE21E500818057 /* DnaGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DnaGenOptions.hpp; sourceTree = "<group>"; };
 		DCF180081DFE224800818057 /* DnaGenOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DnaGenOptions.cpp; sourceTree = "<group>"; };
 		E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measuring.cpp; sourceTree = "<group>"; };
@@ -284,6 +287,8 @@
 				DCABE2261E2E141A00A121ED /* main.cpp */,
 				DCABE2451E2FABEB00A121ED /* SamToMapOptions.hpp */,
 				DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */,
+				DCABE24D1E32222E00A121ED /* SamLoader.hpp */,
+				DCABE24C1E32222E00A121ED /* SamLoader.cpp */,
 			);
 			name = samtomap;
 			path = ../sources/samtomap;
@@ -513,6 +518,7 @@
 			files = (
 				DCABE2461E2FABEB00A121ED /* SamToMapOptions.cpp in Sources */,
 				DCABE2471E30F80C00A121ED /* Fasta.cpp in Sources */,
+				DCABE24E1E32222E00A121ED /* SamLoader.cpp in Sources */,
 				DCABE2271E2E141A00A121ED /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
