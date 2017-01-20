@@ -118,13 +118,17 @@ int positionOffset(string cigar) {
     size_t Mpos = cigar.find("M");
     if (Mpos == string::npos) return 0;
     
-    string cigarPart = cigar.substr(0, Mpos); //get part before M
+    //get part before M
+    string cigarPart = cigar.substr(0, Mpos);
     
+    //get position of S
     size_t Spos = cigarPart.find("S");
     if (Spos == string::npos) return 0;
     
+    //get offset number as string
     string offsetStr = cigarPart.substr(0, Spos);
     
+    //extract offset
     int offset;
     try {
         offset = stoi(offsetStr);
