@@ -58,6 +58,7 @@ int main(int argc, const char * argv[]) {
     }
 
     cout << "Converting" << endl;
+    
     convert(samFile, genome, mapFile);
     
     cout << "Done" << endl;
@@ -83,7 +84,7 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
             continue;
         }
         
-        //find sequence index
+        //find fragment index
         ULL index = 0;
         for (; index < genome.getFragmentCount(); index++) {
             if (genome.getIdentifier(index).find(entry.fragmentName) != string::npos) break;
@@ -95,7 +96,7 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
             exit(1);
         }
         
-        //alter sequence position using cigar string
+        //compute sequence position using cigar string
             //numbering in sam is from 1 while in map from 0
         long position = entry.position - positionOffset(entry.cigar) - 1;
         
@@ -109,7 +110,12 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         mapFile << index << " " << position << "\n";
     }
     
-    //otestovat na konci mapFile, zda je vše v pořádku?
+    //test if map file is ok
+    if (!mapFile.good()) {
+        cerr << "Error while writing into map file" << endl;
+        cerr << endl;
+        exit(1);
+    }
 }
 
 
