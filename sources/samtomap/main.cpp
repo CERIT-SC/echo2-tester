@@ -78,10 +78,10 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         if (samLoader.endOfFile()) break;
         
         //if sequence has no mapping, mark as notMapped
-        //if (fragmentName == "*") {
-        //    mapFile << "notMapped\n";
-        //    continue;
-        //}
+        if (entry.fragmentName == "*") {
+            mapFile << "notMapped\n";
+            continue;
+        }
         
         //find sequence index and write it to map file
         
