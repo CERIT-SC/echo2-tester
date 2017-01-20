@@ -1,4 +1,4 @@
-SUBDIR= genome_generator matrix_generator quality_measurer sequence_generator
+SUBDIR= genome_generator matrix_generator quality_measurer sequence_generator samtomap
 
 all: 
 	for d in ${SUBDIR}; do (cd $$d && ${MAKE}); done
