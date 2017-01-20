@@ -27,6 +27,20 @@ cd ../..
 mv sources/matrix_generator/a.out Build/matrix_generator
 
 
+
+# sequence_generator
+echo ""
+echo "Compiling sequence_generator"
+cd sources/sequence_generator
+
+g++ -std=c++11 -O3 -m64 *.cpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
+
+cd ../..
+
+mv sources/sequence_generator/a.out Build/sequence_generator
+
+
+
 # quality_measurer
 echo ""
 echo "Compiling quality_measurer"
@@ -39,16 +53,19 @@ cd ../..
 mv sources/quality_measurer/a.out Build/quality_measurer
 
 
-# sequence_generator
+
+# samtomap
 echo ""
-echo "Compiling sequence_generator"
-cd sources/sequence_generator
+echo "Compiling samtomap"
+cd sources/samtomap
 
 g++ -std=c++11 -O3 -m64 *.cpp ../global/*.cpp -I/usr/local/include -L/usr/local/lib -lboost_program_options
 
 cd ../..
 
-mv sources/sequence_generator/a.out Build/sequence_generator
+mv sources/samtomap/a.out Build/samtomap
+
+
 
 echo ""
 echo "Done"
