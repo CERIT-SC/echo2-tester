@@ -13,23 +13,29 @@
 #include <string>
 #include <limits>
 #include <stdexcept>
+#include <sstream>
+#include <boost/algorithm/string.hpp>
 using namespace std;
 
 struct SamEntry {
-    string fragmentName;
-    long   position;
-    string cigar;
+    string fragmentName = "";
+    long   position = 1;
+    string cigar = "";
 };
 
 
 class SamLoader {
     ifstream& file;
+    bool eof = false;
     
 public:
     SamLoader(ifstream& file);
     
     SamEntry loadNextEntry();
     bool endOfFile();
+    
+private:
+    bool lineIsValid(string line);
 };
 
 class SamEntryException : public std::runtime_error {

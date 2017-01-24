@@ -8,27 +8,52 @@
 
 #include "SamLoader.hpp"
 
+#include <iostream>
 SamLoader::SamLoader(ifstream& file) : file(file) {}
 
 SamEntry SamLoader::loadNextEntry() {
-    string ignore;
     SamEntry entry;
+    string line;
+    getline(file, line);
     
-    //read line
-    file >> ignore >> ignore >> entry.fragmentName;
-    file >> entry.position >> ignore >> entry.cigar;
-    file.ignore(numeric_limits<streamsize>::max(), '\n');
+    //ignoring unimportant lines
+    while (!lineIsValid(line)) {
+        line = "";
+        if (file.good()) getline(file, line);
+        else break;
+    }
     
-    //check
-    if (file.bad()) throw SamEntryException("problem-with-file");
-    if (!file.fail() && entry.position < 0) throw SamEntryException("bad-format");
+    //detect end of file
+    if (line == "") {
+        eof = true;
+        return entry;
+    }
+    
+    //parse line
+    istringstream stream(line);
+    string ignore;
+    stream >> ignore >> ignore >> entry.fragmentName;
+    stream >> entry.position >> ignore >> entry.cigar;
+    
+    //test
+    if (stream.fail()) throw SamEntryException("bad-format");
+    if (entry.fragmentName != "*" && entry.position < 1) throw SamEntryException("bad-format");
 
     return entry;
 }
 
 bool SamLoader::endOfFile() {
-    //fail() guarantees, that last loaded entry is invalid
-    //using eof() shows the end of file, but it's uncertain
-    //whether last entry is valid or not
-    return file.fail();
+    return eof;
+}
+
+bool SamLoader::lineIsValid(string line) {
+    boost::trim(line);
+    
+    //ignore empty lines
+    if (line.length() == 0) return false;
+    
+    //ignore info about fragments
+    if (line[0] == '@') return false;
+    
+    return true;
 }
