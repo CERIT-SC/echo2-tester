@@ -16,7 +16,7 @@
 typedef unsigned long long ULL;
 
 void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile);
-void loadSamEntry(ifstream& samFile);
+SamEntry loadSamEntry(SamLoader& samLoader);
 int positionOffset(string cigar);
 
 
@@ -72,7 +72,7 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
     
     while (true) {
         //load info from sam file
-        SamEntry entry = samLoader.loadNextEntry();
+        SamEntry entry = loadSamEntry(samLoader);
         if (samLoader.endOfFile()) break;
         
         //if sequence has no mapping, mark as notMapped
@@ -88,8 +88,7 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         }
         
         if (index == genome.getFragmentCount()) {
-            cerr << "Corresponding genome fragment not found" << endl;
-            cerr << endl;
+            cerr << "Corresponding genome fragment not found" << endl << endl;
             exit(1);
         }
         
@@ -98,8 +97,7 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         long position = entry.position - positionOffset(entry.cigar) - 1;
         
         if (position < 0) {
-            cerr << "Corrupted data in sam file" << endl;
-            cerr << endl;
+            cerr << "Bad sam format" << endl << endl;
             exit(1);
         }
         
@@ -113,6 +111,22 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         cerr << endl;
         exit(1);
     }
+}
+
+SamEntry loadSamEntry(SamLoader& samLoader) {
+    SamEntry entry;
+    try {
+        entry = samLoader.loadNextEntry();
+    } catch (exception& e) {
+        if (string(e.what()) == "bad-format") {
+            cerr << "Bad sam format" << endl << endl;
+        }
+        if (string(e.what()) == "file-loading-failed") {
+            cerr << "Error while loading sam file" << endl << endl;
+        }
+        exit(1);
+    }
+    return entry;
 }
 
 
