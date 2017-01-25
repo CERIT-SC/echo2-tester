@@ -12,7 +12,6 @@
 SamLoader::SamLoader(ifstream& file) : file(file) {}
 
 SamEntry SamLoader::loadNextEntry() {
-    SamEntry entry;
     string line;
     getline(file, line);
     
@@ -23,23 +22,16 @@ SamEntry SamLoader::loadNextEntry() {
         else break;
     }
     
+    //check file
+    if (file.bad()) throw SamEntryException("file-loading-failed");
+    
     //detect end of file
     if (line == "") {
         eof = true;
-        return entry;
+        return SamEntry();
     }
-    
-    //parse line
-    istringstream stream(line);
-    string ignore;
-    stream >> ignore >> ignore >> entry.fragmentName;
-    stream >> entry.position >> ignore >> entry.cigar;
-    
-    //test
-    if (stream.fail()) throw SamEntryException("bad-format");
-    if (entry.fragmentName != "*" && entry.position < 1) throw SamEntryException("bad-format");
 
-    return entry;
+    return parseLine(line);
 }
 
 bool SamLoader::endOfFile() {
@@ -56,4 +48,19 @@ bool SamLoader::lineIsValid(string line) {
     if (line[0] == '@') return false;
     
     return true;
+}
+
+SamEntry SamLoader::parseLine(const string& line) {
+    SamEntry entry;
+    string ignore;
+    istringstream stream(line);
+    
+    stream >> ignore >> ignore >> entry.fragmentName;
+    stream >> entry.position >> ignore >> entry.cigar;
+    
+    //test
+    if (stream.fail()) throw SamEntryException("bad-format");
+    if (entry.fragmentName != "*" && entry.position < 1) throw SamEntryException("bad-format");
+    
+    return entry;
 }

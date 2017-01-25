@@ -36,6 +36,7 @@ public:
     
 private:
     bool lineIsValid(string line);
+    SamEntry parseLine(const string& line);
 };
 
 class SamEntryException : public std::runtime_error {
