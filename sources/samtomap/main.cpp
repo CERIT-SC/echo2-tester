@@ -65,9 +65,9 @@ int main(int argc, const char * argv[]) {
     long ignored = convert(samFile, genome, mapFile);
     
     if (ignored) {
-        cout << "Number of sequences out of genome fragment bounds: ";
+        cout << "    Number of sequences out of genome fragment bounds: ";
         cout << ignored << endl;
-        cout << "These sequences were ignored" << endl;
+        cout << "    These sequences were ignored" << endl;
     }
     
     cout << "Done" << endl;
