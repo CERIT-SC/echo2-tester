@@ -9,15 +9,18 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <cctype>
+#include <sstream>
 
 #include "SamToMapOptions.hpp"
 #include "SamLoader.hpp"
 #include "../global/Fasta.hpp"
 typedef unsigned long long ULL;
 
-void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile);
+long convert(ifstream& samFile, Fasta& genome, ofstream& mapFile);
 SamEntry loadSamEntry(SamLoader& samLoader);
 int positionOffset(string cigar);
+int sequenceLength(string cigar);
 
 
 int main(int argc, const char * argv[]) {
@@ -59,7 +62,13 @@ int main(int argc, const char * argv[]) {
 
     cout << "Converting" << endl;
     
-    convert(samFile, genome, mapFile);
+    long ignored = convert(samFile, genome, mapFile);
+    
+    if (ignored) {
+        cout << "Number of sequences out of genome fragment bounds: ";
+        cout << ignored << endl;
+        cout << "These sequences were ignored" << endl;
+    }
     
     cout << "Done" << endl;
     cout << endl;
@@ -67,8 +76,9 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
+long convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
     SamLoader samLoader(samFile);
+    long ignored = 0;
     
     while (true) {
         //load info from sam file
@@ -96,9 +106,14 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
             //numbering in sam is from 1 while in map from 0
         long position = entry.position - positionOffset(entry.cigar) - 1;
         
-        if (position < 0) {
-            cerr << "Bad sam format" << endl << endl;
-            exit(1);
+        //ignore sequences that start or end outside of genome fragment
+        if (position < 0 ||
+            position + sequenceLength(entry.cigar) >
+            genome.getData(index).size()) {
+            
+            ignored++;
+            mapFile << "notMapped\n";
+            continue;
         }
         
         //write to map file
@@ -111,6 +126,8 @@ void convert(ifstream& samFile, Fasta& genome, ofstream& mapFile) {
         cerr << endl;
         exit(1);
     }
+    
+    return ignored;
 }
 
 SamEntry loadSamEntry(SamLoader& samLoader) {
@@ -155,4 +172,22 @@ int positionOffset(string cigar) {
     }
     
     return offset;
+}
+
+int sequenceLength(string cigar) {
+    //make cigar splitable
+    for (char& c: cigar) {
+        if (!isdigit(c)) c = ' ';
+    }
+    
+    int length = 0, count = 0;
+    istringstream stream(cigar);
+    
+    //read each number and add to length
+    while(stream.good()) {
+        stream >> count;
+        if (!stream.fail()) length += count;
+    }
+    
+    return length;
 }
