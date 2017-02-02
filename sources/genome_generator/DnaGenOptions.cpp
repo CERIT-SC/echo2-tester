@@ -11,7 +11,7 @@
 DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
     po::options_description optionDescription("Options");
     
-    //setup options
+    //define options
     optionDescription.add_options()
     ("help", "Produce help message\n")
     
@@ -27,7 +27,7 @@ DnaGenOptions::DnaGenOptions(int argc, const char * argv[]) {
     ("prob-g,g", po::value<int>()->default_value(25), "Sets probability of base G")
     ("prob-t,t", po::value<int>()->default_value(25), "Sets probability of base T");
     
-    //load options
+    //parse options
     try {
         po::store(po::parse_command_line(argc, argv, optionDescription), optionMap);
     } catch (exception &e) {
@@ -160,7 +160,7 @@ bool DnaGenOptions::parseProbabilities() {
     prob.T = getParsedProbability("prob-t");
     if (opState != OPS_OK) return false;
     
-    if((prob.A + prob.C + prob.G + prob.T) != 100) {
+    if ((prob.A + prob.C + prob.G + prob.T) != 100) {
         setOptionError("Sum of probabilities must be 100");
         return false;
     }

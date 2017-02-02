@@ -26,13 +26,14 @@ MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
     options.add(required).add(optional);
     
     
-    //load options
+    //parse options
     try {
         po::store(po::parse_command_line(argc, argv, options), optionMap);
     } catch (exception &e) {
         setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
+    po::notify(optionMap);
     
     //print help
     if (optionMap.count("help")) {
@@ -82,10 +83,10 @@ void MatrGenOptions::checkOptionValidity() {
     
     //check if options are specified
     checkForExistence("length", "Matrix length must be specified");
-    if(opState != OPS_OK) return;
+    if (opState != OPS_OK) return;
     
     checkForExistence("mean", "Error mean must be specified");
-    if(opState != OPS_OK) return;
+    if (opState != OPS_OK) return;
     
     
     //check values

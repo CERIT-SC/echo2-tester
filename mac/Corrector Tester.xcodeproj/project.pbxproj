@@ -25,6 +25,10 @@
 		DC1404451E0308B6002F9125 /* ProbMatrixLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404431E0308B6002F9125 /* ProbMatrixLoader.cpp */; };
 		DC14044C1E031451002F9125 /* Fasta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404491E030F9F002F9125 /* Fasta.cpp */; };
 		DC14044D1E031466002F9125 /* Fasta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404491E030F9F002F9125 /* Fasta.cpp */; };
+		DCABE2271E2E141A00A121ED /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE2261E2E141A00A121ED /* main.cpp */; };
+		DCABE2461E2FABEB00A121ED /* SamToMapOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */; };
+		DCABE2471E30F80C00A121ED /* Fasta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC1404491E030F9F002F9125 /* Fasta.cpp */; };
+		DCABE24E1E32222E00A121ED /* SamLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCABE24C1E32222E00A121ED /* SamLoader.cpp */; };
 		DCF180091DFE224800818057 /* DnaGenOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCF180081DFE224800818057 /* DnaGenOptions.cpp */; };
 		E9E0C9D91E0C06BA0078C7D8 /* Measuring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */; };
 /* End PBXBuildFile section */
@@ -75,6 +79,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		DCABE2221E2E141A00A121ED /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +119,12 @@
 		DC1404491E030F9F002F9125 /* Fasta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fasta.cpp; sourceTree = "<group>"; };
 		DC14044A1E030F9F002F9125 /* Fasta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Fasta.hpp; sourceTree = "<group>"; };
 		DC7C20931E1FC755000DBEA2 /* GlobalSetup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GlobalSetup.hpp; sourceTree = "<group>"; };
+		DCABE2241E2E141A00A121ED /* samtomap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = samtomap; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCABE2261E2E141A00A121ED /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SamToMapOptions.cpp; sourceTree = "<group>"; };
+		DCABE2451E2FABEB00A121ED /* SamToMapOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SamToMapOptions.hpp; sourceTree = "<group>"; };
+		DCABE24C1E32222E00A121ED /* SamLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SamLoader.cpp; sourceTree = "<group>"; };
+		DCABE24D1E32222E00A121ED /* SamLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SamLoader.hpp; sourceTree = "<group>"; };
 		DCF180071DFE21E500818057 /* DnaGenOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DnaGenOptions.hpp; sourceTree = "<group>"; };
 		DCF180081DFE224800818057 /* DnaGenOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DnaGenOptions.cpp; sourceTree = "<group>"; };
 		E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measuring.cpp; sourceTree = "<group>"; };
@@ -149,6 +168,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DCABE2211E2E141A00A121ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -159,6 +185,7 @@
 				DC0461AC1DF6EBA20051C37E /* matrix_generator */,
 				DC0461B71DF6EBC70051C37E /* sequence_generator */,
 				DC0461C21DF6EBF20051C37E /* quality_measurer */,
+				DCABE2251E2E141A00A121ED /* samtomap */,
 				DC0461DE1DF6ECF70051C37E /* global */,
 				DC0461EB1DF6EECE0051C37E /* TestSuite */,
 				DC0461921DF6E98F0051C37E /* Products */,
@@ -173,6 +200,7 @@
 				DC0461B61DF6EBC70051C37E /* sequence_generator */,
 				DC0461C11DF6EBF20051C37E /* quality_measurer */,
 				DC0461EA1DF6EECE0051C37E /* TestSuite */,
+				DCABE2241E2E141A00A121ED /* samtomap */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,12 +244,12 @@
 			isa = PBXGroup;
 			children = (
 				DC0461C31DF6EBF20051C37E /* main.cpp */,
+				DC0461D91DF6ECC30051C37E /* QMeasOptions.hpp */,
+				DC0461D81DF6ECC30051C37E /* QMeasOptions.cpp */,
 				DC0461D51DF6ECC30051C37E /* FileLoaders.hpp */,
 				DC0461D41DF6ECC30051C37E /* FileLoaders.cpp */,
 				E9E0C9D81E0C06BA0078C7D8 /* Measuring.hpp */,
 				E9E0C9D71E0C06BA0078C7D8 /* Measuring.cpp */,
-				DC0461D91DF6ECC30051C37E /* QMeasOptions.hpp */,
-				DC0461D81DF6ECC30051C37E /* QMeasOptions.cpp */,
 				E9E0C9DA1E0D47EE0078C7D8 /* Setup.hpp */,
 			);
 			name = quality_measurer;
@@ -251,6 +279,19 @@
 			);
 			name = TestSuite;
 			path = ../sources/TestSuite;
+			sourceTree = SOURCE_ROOT;
+		};
+		DCABE2251E2E141A00A121ED /* samtomap */ = {
+			isa = PBXGroup;
+			children = (
+				DCABE2261E2E141A00A121ED /* main.cpp */,
+				DCABE2451E2FABEB00A121ED /* SamToMapOptions.hpp */,
+				DCABE2441E2FABEB00A121ED /* SamToMapOptions.cpp */,
+				DCABE24D1E32222E00A121ED /* SamLoader.hpp */,
+				DCABE24C1E32222E00A121ED /* SamLoader.cpp */,
+			);
+			name = samtomap;
+			path = ../sources/samtomap;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
@@ -341,6 +382,23 @@
 			productReference = DC0461EA1DF6EECE0051C37E /* TestSuite */;
 			productType = "com.apple.product-type.tool";
 		};
+		DCABE2231E2E141A00A121ED /* samtomap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCABE2281E2E141A00A121ED /* Build configuration list for PBXNativeTarget "samtomap" */;
+			buildPhases = (
+				DCABE2201E2E141A00A121ED /* Sources */,
+				DCABE2211E2E141A00A121ED /* Frameworks */,
+				DCABE2221E2E141A00A121ED /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = samtomap;
+			productName = samtomap;
+			productReference = DCABE2241E2E141A00A121ED /* samtomap */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -370,6 +428,10 @@
 						CreatedOnToolsVersion = 8.1;
 						ProvisioningStyle = Automatic;
 					};
+					DCABE2231E2E141A00A121ED = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = DC04618C1DF6E98F0051C37E /* Build configuration list for PBXProject "Corrector Tester" */;
@@ -388,6 +450,7 @@
 				DC0461AA1DF6EBA20051C37E /* matrix_generator */,
 				DC0461B51DF6EBC70051C37E /* sequence_generator */,
 				DC0461C01DF6EBF20051C37E /* quality_measurer */,
+				DCABE2231E2E141A00A121ED /* samtomap */,
 				DC0461E91DF6EECE0051C37E /* TestSuite */,
 			);
 		};
@@ -446,6 +509,17 @@
 				DC0461ED1DF6EECE0051C37E /* main.cpp in Sources */,
 				DC0461F41DF87E3B0051C37E /* N44Matrix.cpp in Sources */,
 				DC0461F31DF6EEFA0051C37E /* N44MatrixTests.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCABE2201E2E141A00A121ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCABE2461E2FABEB00A121ED /* SamToMapOptions.cpp in Sources */,
+				DCABE2471E30F80C00A121ED /* Fasta.cpp in Sources */,
+				DCABE24E1E32222E00A121ED /* SamLoader.cpp in Sources */,
+				DCABE2271E2E141A00A121ED /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +697,24 @@
 			};
 			name = Release;
 		};
+		DCABE2291E2E141A00A121ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DCABE22A1E2E141A00A121ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -676,6 +768,15 @@
 			buildConfigurations = (
 				DC0461EF1DF6EECE0051C37E /* Debug */,
 				DC0461F01DF6EECE0051C37E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCABE2281E2E141A00A121ED /* Build configuration list for PBXNativeTarget "samtomap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCABE2291E2E141A00A121ED /* Debug */,
+				DCABE22A1E2E141A00A121ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
