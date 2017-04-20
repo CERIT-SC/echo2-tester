@@ -1,4 +1,4 @@
-SUBDIR = genome_generator matrix_generator quality_measurer sequence_generator
+SUBDIR = genome_generator matrix_generator quality_measurer sequence_generator samtomap
 
 .PHONY: all
 all:
