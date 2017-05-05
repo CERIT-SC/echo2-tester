@@ -223,7 +223,8 @@ void generateErrors(vector<Sequence>& sequences,
                 case 'G': case 'g': row = 2; break;
                 case 'T': case 't': row = 3; break;
                 default: {
-                    cerr << "Corrupted input data" << endl;
+                    cerr << "Corrupted input data:" << endl;
+                    cerr << sequence << endl;
                     cerr << "Aborting generation" << endl;
                     cerr << endl;
                     exit(1);
