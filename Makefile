@@ -14,6 +14,10 @@ here:
 	mkdir -p Build
 	for d in $(SUBDIR); do cp sources/$$d/$$d Build/$$d; done
 
+.PHONY: unhere
+unhere:
+	rm -rf Build
+
 .PHONY: install
 install:
 	mkdir -p $(prefix)/bin
