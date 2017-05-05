@@ -1,4 +1,4 @@
-SUBDIR = genome_generator matrix_generator quality_measurer sequence_generator samtomap
+SUBDIR = genome_generator matrix_generator quality_measurer sequence_generator
 prefix ?= /usr/local
 
 .PHONY: all
