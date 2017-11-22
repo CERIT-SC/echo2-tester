@@ -9,6 +9,6 @@
 #ifndef GlobalSetup_h
 #define GlobalSetup_h
 
-#define VERSION_STRING "2.0.0 (build 7)"
+#define VERSION_STRING "2.0.0"
 
 #endif /* GlobalSetup_h */
