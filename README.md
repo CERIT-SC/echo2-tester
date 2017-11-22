@@ -26,12 +26,12 @@ It consists of 4 programs:
    (`/usr/local/bin`). You may need admin privileges for this step. 
    In that case, run `sudo make install` and enter admin password.
      - You can alternatively run `make here` to copy the programs to the main
-       repository folder.
+       repository folder. (In folder `Build`.)
      - You can choose where to install the applications by providing variable
       `prefix`. I.e. `make install prefix=/usr` will install Corrector Tester in `/usr/bin` folder.
 4. After `make install` programs should be available using commands:
    `genome_generator`, `sequence_generator`, `matrix_generator`, and 
-   `quality_measurer`
+   `quality_measurer`.
 
 ## How to use
 
