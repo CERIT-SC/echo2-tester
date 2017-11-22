@@ -1,31 +1,12 @@
 //
-//  ProbMatrixGetter.cpp
-//  testing system
+//  ProbMatrixLoader.cpp
+//  Corrector Tester
 //
-//  Created by Miloš Šimek on 18.04.15.
-//  Copyright (c) 2015 Miloš Šimek. All rights reserved.
+//  Created by Miloš Šimek on 15/12/2016.
+//
 //
 
-#include "ProbMatrixGetter.h"
-
-N44Matrix generateProbMatrix(unsigned uniformProbability, unsigned matrixLength) {
-    N44Matrix probMatrix(matrixLength);
-    
-    double primaryProb = static_cast<double>(100-uniformProbability) / 100;
-    double secondProb = static_cast<double>(uniformProbability) / (3*100);
-    
-    for (unsigned index = 0; index < matrixLength; index++) {
-        for (unsigned row = 0; row < 4; row++) {
-            for (unsigned column = 0; column < 4; column++) {
-                
-                if(row == column) probMatrix(index,row,column) = primaryProb;
-                else probMatrix(index,row,column) = secondProb;
-            }
-        }
-    }
-    
-    return probMatrix;
-}
+#include "ProbMatrixLoader.hpp"
 
 ProbMatrixLoader::ProbMatrixLoader(string matrixFileName, unsigned matrixLength) {
     //prepare input file and matrix
@@ -60,8 +41,8 @@ ProbMatrixLoader::ProbMatrixLoader(string matrixFileName, unsigned matrixLength)
     }
     
     //fill remainder
-        //if matrix in file is shorter, the last 4x4 matrix is copied
-        //to remaining positions
+    //if matrix in file is shorter, the last 4x4 matrix is copied
+    //to remaining positions
     if (index < matrixLength) {
         unsigned lastLoadedIndex = index;
         

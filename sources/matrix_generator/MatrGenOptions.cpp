@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "MatrGenOptions.h"
+#include "MatrGenOptions.hpp"
 
 MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
     //define options
@@ -26,18 +26,28 @@ MatrGenOptions::MatrGenOptions(int argc, const char * argv[]) {
     options.add(required).add(optional);
     
     
-    //load options
+    //parse options
     try {
         po::store(po::parse_command_line(argc, argv, options), optionMap);
     } catch (exception &e) {
-        opState = OPS_ERR;
-        cerr << "Incorrect input: " << e.what() << endl << endl;
+        setOptionError(string("Incorrect input: ") + e.what());
         return;
     }
+    po::notify(optionMap);
     
     //print help
     if (optionMap.count("help")) {
         opState = OPS_HELP;
+        
+        cout << endl;
+        cout << "Matrix Generator" << endl;
+        cout << "Version: " << VERSION_STRING << endl;
+        cout << "This tool generates 3 dimensional probability matrix" << endl;
+        cout << "for the purposes of setting error rate independently for" << endl;
+        cout << "each base of a sequence." << endl;
+        cout << "Matrix is generated using pseudo-random generator and is" << endl;
+        cout << "configured by setting its length and mean." << endl;
+        cout << endl;
         cout << options << endl;
         return;
     }
@@ -73,10 +83,10 @@ void MatrGenOptions::checkOptionValidity() {
     
     //check if options are specified
     checkForExistence("length", "Matrix length must be specified");
-    if(opState != OPS_OK) return;
+    if (opState != OPS_OK) return;
     
     checkForExistence("mean", "Error mean must be specified");
-    if(opState != OPS_OK) return;
+    if (opState != OPS_OK) return;
     
     
     //check values
@@ -98,7 +108,9 @@ void MatrGenOptions::checkForExistence(const char * option, const char * errOutp
     }
 }
 
-void MatrGenOptions::setOptionError(const char * message) {
-    cerr << message << endl << endl;
+void MatrGenOptions::setOptionError(string message) {
+    cerr << message << endl;
+    cerr << "For help, run with --help" << endl;
+    cerr << endl;
     opState = OPS_ERR;
 }

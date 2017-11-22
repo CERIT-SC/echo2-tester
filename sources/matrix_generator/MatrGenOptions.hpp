@@ -12,7 +12,9 @@
 #include <string>
 #include <iostream>
 #include <boost/program_options.hpp>
-#include "../global/Optional.h"
+
+#include "../global/Optional.hpp"
+#include "../global/GlobalSetup.hpp"
 
 using namespace std;
 namespace po = boost::program_options;
@@ -39,7 +41,7 @@ public:
 private:
     void checkOptionValidity();
     void checkForExistence(const char * option, const char * errOutput);
-    void setOptionError(const char * message);
+    void setOptionError(string message);
 };
 
 #endif /* defined(__testing_system__MatrGenOptions__) */

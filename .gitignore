@@ -17,3 +17,10 @@ xcuserdata/
 *.pch
 
 a.out
+
+# Compiled Tools #
+sources/genome_generator/genome_generator
+sources/matrix_generator/matrix_generator
+sources/quality_measurer/quality_measurer
+sources/sequence_generator/sequence_generator
+sources/samtomap/samtomap

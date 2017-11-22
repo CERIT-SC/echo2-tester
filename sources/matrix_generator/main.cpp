@@ -10,19 +10,21 @@
 #include <ctime>
 #include <fstream>
 #include <cstdlib>
-#include "MatrGenOptions.h"
-#include "../global/N44Matrix.h"
-#include "../global/Optional.h"
+
+#include "MatrGenOptions.hpp"
+#include "../global/N44Matrix.hpp"
+#include "../global/Optional.hpp"
 using namespace std;
 
+//function declarations
 N44Matrix generateRandMatrix(unsigned length, float mean);
 double getRandDouble(double rangeMin, double rangeMax, int numOfValues);
+
 
 int main(int argc, const char * argv[]) {
     
     //load parameters
     MatrGenOptions options(argc, argv);
-    
     if(options.optionsState() == OPS_HELP) return 0;
     if(options.optionsState() == OPS_ERR)  return 1;
     

@@ -12,13 +12,21 @@
 #include <string>
 #include <fstream>
 #include <limits>
-#include <algorithm>
 #include <stdexcept>
-#include <cctype>
+#include <utility>
+#include <algorithm>
+
+#include "Setup.hpp"
+#include "../global/Optional.hpp"
+
 using namespace std;
 typedef unsigned long long ULL;
 
+//returns empty string when end of file occurs
 string loadNextSeq(ifstream& inputFile);
-ULL loadNextSeqPos(ifstream& mapFile);
+
+//pair - fragment, position
+//returns NoValue if sequence isn't mapped
+Optional<pair<unsigned, ULL>> loadNextMapEntry(ifstream& mapFile);
 
 #endif

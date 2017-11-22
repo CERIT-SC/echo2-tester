@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miloš Šimek. All rights reserved.
 //
 
-#include "FileLoaders.h"
+#include "FileLoaders.hpp"
 
 string loadNextSeq(ifstream& inputFile) {
     string seq;
@@ -23,7 +23,7 @@ string loadNextSeq(ifstream& inputFile) {
     
     //line 3
     char ch = inputFile.get();
-    if (ch != '+') throw runtime_error("incorrect_fastq_signature");
+    if (ch != '+') throw runtime_error("incorrect-fastq-signature");
     inputFile.ignore(unlimited, '\n');
     
     //line 4
@@ -31,12 +31,11 @@ string loadNextSeq(ifstream& inputFile) {
     
     
     //check sequence correctness
-    transform(seq.begin(), seq.end(), seq.begin(), ::toupper);
-    for_each(seq.begin(), seq.end(), [](char c){
-        if (c != 'A' && c != 'C' && c != 'G' && c != 'T') {
-            throw runtime_error("seq_bad_data");
+    for (char ch: seq) {
+        if (count(allowedChar.begin(), allowedChar.end(), ch) == 0) {
+            throw runtime_error("seq-bad-data");
         }
-    });
+    }
     
     return seq;
     
@@ -45,12 +44,29 @@ string loadNextSeq(ifstream& inputFile) {
     //shouldn't be a problem: number of loaded sequences should be seen in program output
 }
 
-ULL loadNextSeqPos(ifstream& mapFile) {
-    if (!mapFile.good()) throw runtime_error("file_not_good");
-    
-    ULL position;
-    mapFile >> position;
-    if (mapFile.fail()) throw runtime_error("file_bad");
-    
-    return position;
+Optional<pair<unsigned, ULL>> loadNextMapEntry(ifstream& mapFile) {
+    try {
+        string firstEntry;
+        mapFile >> firstEntry;
+        
+        //find out if sequence is mapped to genome
+        if (firstEntry == string("notMapped")) return Opt::NoValue;
+        
+        //load fragment
+        int fragment = stoi(firstEntry); //throws exeption if can't convert
+        if (fragment < 0) throw runtime_error("corrupted-map-file");
+        
+        //load position
+        ULL position;
+        mapFile >> position;
+        
+        //check file
+        if (mapFile.fail()) throw runtime_error("corrupted-map-file");
+        
+        return make_pair(static_cast<unsigned>(fragment), position);
+        
+    } catch (...) {
+        throw runtime_error("corrupted-map-file");
+    }
 }
+

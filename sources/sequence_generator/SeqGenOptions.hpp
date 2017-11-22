@@ -14,6 +14,9 @@
 #include <exception>
 #include <boost/program_options.hpp>
 
+#include "../global/Optional.hpp"
+#include "../global/GlobalSetup.hpp"
+
 using namespace std;
 namespace po = boost::program_options;
 typedef unsigned long long ULL;
@@ -30,25 +33,23 @@ class SeqGenOptions {
 public:
     SeqGenOptions(int argc, const char * argv[]);
     
-    string      getGenomeFilePath();
-    ULL         getSeqNum();
+    string      getGenomeFileName();
+    float       getCoverage();
     unsigned    getSeqLength();
     string      getOutputSequenceFileName();
     string      getOutputMapFileName();
-    bool        randGenSeedIsSet();
-    unsigned    randGenSeed();
+    Optional<unsigned> randGenSeed();
     
     //only one way to retrieve probability is valid in given run
-    bool        isProbabilityUniform();
-    unsigned    getUniformProbability();
-    string      getProbabilityFileName();
+    Optional<float>  uniformProbability();
+    Optional<string> probabilityFileName();
     
     OptionsState optionsState();
     
 private:
     void checkOptionValidity();
     void checkForExistence(const char * option, const char * errOutput);
-    void setOptionError(const char * message);
+    void setOptionError(string message);
 };
 
 #endif

@@ -12,7 +12,9 @@
 #include <string>
 #include <iostream>
 #include <boost/program_options.hpp>
-#include "../global/Optional.h"
+
+#include "../global/Optional.hpp"
+#include "../global/GlobalSetup.hpp"
 
 namespace po = boost::program_options;
 using namespace std;
@@ -35,6 +37,10 @@ public:
     Optional<string> getOutputFile();
     
     OptionsState optionsState();
+    
+private:
+    void checkForOptionValidity();
+    void setOptionError(string message);
 };
 
 

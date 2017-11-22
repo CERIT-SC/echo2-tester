@@ -1,8 +1,6 @@
 include ../Makefile.inc
 
-VPATH=../global
-
-OBJ=CorruptedSeqGenerator.o ProbMatrixGetter.o SeqGenOptions.o main.o N44Matrix.o
+OBJ= main.o ProbMatrixLoader.o SeqGenOptions.o N44Matrix.o Fasta.o
 
 sequence_generator: ${OBJ}
 	${CXX} -o $@ ${OBJ} ${BOOST}

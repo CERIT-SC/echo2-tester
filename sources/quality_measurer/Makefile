@@ -1,12 +1,9 @@
-SRC=FileLoaders.cpp main.cpp Measuring.cpp QMeasOptions.cpp
+include ../Makefile.inc
+
+SRC= main.cpp FileLoaders.cpp Measuring.cpp QMeasOptions.cpp Fasta.cpp
 OBJ=${SRC:.cpp=.o}
 
-DEBUG=-O2
-
-SRCDIR=.:../Global
-
-CPPFLAGS=-I../Global
-CXXFLAGS=-std=c++11 ${DEBUG}
+CPPFLAGS=-I../global
 
 LIB=-lboost_program_options
 
