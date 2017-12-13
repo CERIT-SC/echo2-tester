@@ -163,6 +163,13 @@ This implementation was created by **Miloš Šimek** at
 [Masaryk University](https://www.muni.cz/en).  
 You can email me at <simek@ics.muni.cz>.
 
+## Acknowledgments
+This work was supported by projects CERIT Scientific Cloud (LM2015085), CESNET (LM2015042), and ELIXIR-CZ project (LM2015047) in the programme "Projects of Large Research, Development, and Innovations Infrastructures".
+
+I would like to thank Aleš Křenek who made this project possible.
+
+Cite **TODO** when using this work.
+
 ## Copyright
 This project is licensed under Creative Commons 4.0 International
 license (CC BY 4.0). Summary of the license can be found
